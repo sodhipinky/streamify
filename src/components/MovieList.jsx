@@ -10,6 +10,9 @@ function MovieList({ movies }) {
                             <h5 className='card-title'>{movie.original_title}</h5>
                             <p className='card-text text-secondary'>{movie.overview}</p>
                         </div>
+                        <div className='card-footer'>
+                            <small className='fw-bold text-success'>Rating: {movie.vote_average | Number}/10</small>
+                        </div>
                     </div>
                 ))
             }
