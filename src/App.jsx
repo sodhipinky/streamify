@@ -49,11 +49,11 @@ function App() {
 
   return (
     <div className='container-fluid movie-app'>
-      {/* <div className='row'> */}
-      <div className='col d-flex flex-wrap  justify-content-start'>
-        <MovieList movies={movies} />
+      <div className='row'>
+        <div className='col d-flex flex-wrap justify-content-center'>
+          <MovieList movies={movies} />
+        </div>
       </div>
-      {/* </div> */}
     </div >
   );
 }

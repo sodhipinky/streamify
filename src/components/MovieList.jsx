@@ -4,8 +4,12 @@ function MovieList({ movies }) {
         <>
             {
                 movies.map((movie, index) => (
-                    <div key={index} className="image-container m-3">
-                        <img src={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`} alt={movie.original_title} height={200} />
+                    <div key={index} className='card movie-card m-2'>
+                        <img src={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`} className='card-img-top' alt={movie.original_title} />
+                        <div className='card-body'>
+                            <h5 className='card-title'>{movie.original_title}</h5>
+                            <p className='card-text text-secondary'>{movie.overview}</p>
+                        </div>
                     </div>
                 ))
             }
