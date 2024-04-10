@@ -4,7 +4,7 @@ function MovieList({ movies }) {
         <>
             {
                 movies.map((movie, index) => (
-                    <div key={index} className='card movie-card m-2 font-monospace bg-secondary-subtle rounded-5 border-secondary'>
+                    <div key={index} className='card movie-card m-2 font-monospace bg-secondary-subtle rounded-5 border-secondary shadow'>
                         <img src={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`} className='card-img-top rounded-5 shadow' alt={movie.title} />
                         <div className='card-body'>
                             <h5 className='card-title fw-bold text-primary-emphasis text-decoration-underline'>{movie.title}</h5>

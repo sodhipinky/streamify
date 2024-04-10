@@ -48,7 +48,7 @@ function App() {
   })
 
   return (
-    <div className='container-fluid movie-app'>
+    <div className='container-fluid'>
       <div className='row'>
         <div className='col d-flex flex-wrap justify-content-center'>
           <MovieList movies={movies} />
