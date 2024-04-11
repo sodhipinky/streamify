@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
+import Header from './components/Header';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -64,6 +65,7 @@ function App() {
 
   return (
     <>
+    <Header />
       <div className='container-fluid'>
         <div className='row'>
           <div className='col d-flex flex-wrap justify-content-center'>
