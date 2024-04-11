@@ -15,13 +15,13 @@ function App() {
       const allMovies = [];
 
       for (const page of pages) { // fetches movies from pages 1 to 10
-        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`)
-          .then(response => response.json())
+        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`) 
+          .then(response => response.json()) 
           .then(pageData => allMovies.push(...pageData.results))
-          .then(() => setMovies(allMovies))
-          .then(() => setIsLoading(false))
           .catch(error => setError(error));
       }
+      setMovies(allMovies); // sets the movies state to allMovies
+      setIsLoading(false); // sets the isLoading state to false
     };
     fetchPages(); // calls the fetchPages function
   }, [])
@@ -50,7 +50,7 @@ function App() {
     )
   }
 
-  if(!movies.length) {
+  if (!movies.length) {
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -63,13 +63,15 @@ function App() {
   }
 
   return (
-    <div className='container-fluid'>
-      <div className='row'>
-        <div className='col d-flex flex-wrap justify-content-center'>
-          <MovieList movies={movies} />
+    <>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col d-flex flex-wrap justify-content-center'>
+            <MovieList movies={movies} />
+          </div>
         </div>
-      </div>
-    </div >
+      </div >
+    </>
   );
 }
 
