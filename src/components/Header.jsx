@@ -1,5 +1,5 @@
 // import Navbar from './Navbar'
-import StreamifyNavbar from "./Navbar"
+import StreamifyNavbar from "./StreamifyNavbar"
 
 function Header() {
     return (
