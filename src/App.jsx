@@ -68,7 +68,7 @@ function App() {
     <Header />
       <div className='container-fluid'>
         <div className='row'>
-          <div className='col d-flex flex-wrap justify-content-center'>
+          <div className='col d-flex flex-wrap justify-content-start'>
             <MovieList movies={movies} />
           </div>
         </div>
