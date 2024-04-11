@@ -1,9 +1,11 @@
 import Navbar from './Navbar'
 
-function Header () {
+function Header() {
     return (
         <>
-            <Navbar />
+            <div className='container-fluid m-0 p-0 w-100 '>
+                <Navbar />
+            </div>
         </>
     )
 }
