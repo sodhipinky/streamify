@@ -1,35 +1,47 @@
 import Logo from '../assets/favicon.ico'
+import { Container, Nav, Navbar, NavDropdown, Form } from 'react-bootstrap'
 import { useState } from 'react'
 
-function Navbar() {
-    const [isNavCollapsed, setIsNavCollapsed] = useState(true)
+function StreamifyNavbar() {
+    const [dropdownTitle, ssetDropdownTitle] = useState('All Movies')
 
-    const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed)
+    const handleClick = (eventKey, event) => {
+        // set the selected optio as the title of the dropdown
+        event.preventDefault();
+       const selectedOption = event.target.innerText;
+         ssetDropdownTitle(selectedOption);
+    };
 
     return (
-        <>
-            <nav className="navbar navbar-expand-lg bg-dark font-monospace mb-3">
-                <div className="container-fluid">
-                    <a className="navbar-brand fw-bold fs-2 text-white pe-2" href="#">
-                        <img src={Logo} alt={"Streamify"} width={55} className="d-inline-block me-2" />
-                        Streamify</a>
-                    <button className="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation" onClick={handleNavCollapse}>
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <a className="nav-link active text-white" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link text-white" href="#">About</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </>
+        <Navbar bg="dark" expand="lg" variant="dark" className='mb-5 font-monospace'>
+            <Container fluid>
+                <Navbar.Brand href="#home">
+                    <img src={Logo} alt={"Streamify"} width={55} className="d-inline-block me-2" />
+                    Streamify
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-around'>
+                    <Form className="d-flex">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#link">About</Nav.Link>
+                            <NavDropdown title={dropdownTitle} id="basic-nav-dropdown" onSelect={handleClick}>
+                                <NavDropdown.Item eventKey={1} href="#">Title</NavDropdown.Item>
+                                <NavDropdown.Item eventKey={2} href="#">Genre</NavDropdown.Item>
+                                <NavDropdown.Item eventKey={3} href="#">Rating</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                        <Form.Control
+                            type="search"
+                            placeholder="Search"
+                            className="ms-2 me-2 rounded-pill border-0"
+                            aria-label="Search"
+                        />
+                    </Form>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     )
 }
 
-export default Navbar
+export default StreamifyNavbar
