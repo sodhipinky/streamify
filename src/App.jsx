@@ -7,45 +7,20 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    Promise.all([
-      fetch('https://api.themoviedb.org/3/discover/movie?api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=2&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=3&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=4&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=5&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=6&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=7&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=8&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=9&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-      fetch('https://api.themoviedb.org/3/discover/movie?page=10&api_key=4c0193b45b042c536215774762ee44b5').then((response) => response.json()),
-    ])
-      .then((
-        [
-          page1,
-          page2,
-          page3,
-          page4,
-          page5,
-          page6,
-          page7,
-          page8,
-          page9,
-          page10
-        ]) => {
-        setMovies([
-          ...page1.results,
-          ...page2.results,
-          ...page3.results,
-          ...page4.results,
-          ...page5.results,
-          ...page6.results,
-          ...page7.results,
-          ...page8.results,
-          ...page9.results,
-          ...page10.results
-        ]);
-      });
-  })
+    const fetchPages = async () => {
+      const pages = Array.from({ length: 10 }, (_, i) => i + 1); // creates an array [1, 2, ..., 10]
+      const allMovies = [];
+
+      for (const page of pages) {
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`);
+        const data = await response.json();
+        allMovies.push(...data.results);
+      }
+
+      setMovies(allMovies);
+    };
+    fetchPages();
+  }, [])
 
   return (
     <div className='container-fluid'>
