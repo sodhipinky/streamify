@@ -83,17 +83,15 @@ function App() {
           <div className='col d-flex justify-content-start ms-4'>
             <h3 className='mt-5 p-3 label rounded-pill'>Trending Movies</h3>
           </div>
+          <div className='horizontal-scroll'>
+            <MovieList movies={trendingMovies} />
+          </div>
           <div className='row'>
             <div className='col d-flex flex-wrap justify-content-start'>
-              <MovieList movies={trendingMovies} />
+              <MovieList movies={movies} />
             </div>
-            <div className='row'>
-              <div className='col d-flex flex-wrap justify-content-start'>
-                <MovieList movies={movies} />
-              </div>
-            </div>
-          </div >
-        </div>
+          </div>
+        </div >
       </div>
     </>
   )
