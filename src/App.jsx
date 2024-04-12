@@ -6,6 +6,7 @@ import Header from './components/Header';
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,8 +17,8 @@ function App() {
       const allMovies = [];
 
       for (const page of pages) { // fetches movies from pages 1 to 10
-        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`) 
-          .then(response => response.json()) 
+        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`)
+          .then(response => response.json())
           .then(pageData => allMovies.push(...pageData.results))
           .catch(error => setError(error));
       }
@@ -25,7 +26,18 @@ function App() {
       setIsLoading(false); // sets the isLoading state to false
     };
     fetchPages(); // calls the fetchPages function
-  }, [])
+  }, []);
+
+
+  useEffect(() => {
+    const fetchTrendingMovies = async () => {
+      await fetch('https://api.themoviedb.org/3/trending/movie/week?api_key=4c0193b45b042c536215774762ee44b5')
+        .then(response => response.json())
+        .then(data => setTrendingMovies(data.results))
+        .catch(error => setError(error));
+    };
+    fetchTrendingMovies();
+  });
 
   if (isLoading) {
     return (
@@ -65,16 +77,26 @@ function App() {
 
   return (
     <>
-    <Header />
-      <div className='container-fluid'>
+      <Header />
+      <div className='container-fluid font-monospace '>
         <div className='row'>
-          <div className='col d-flex flex-wrap justify-content-start'>
-            <MovieList movies={movies} />
+          <div className='col d-flex justify-content-start ms-4'>
+            <h3 className='mt-5 p-3 fs-5 label'>Trending Movies</h3>
           </div>
+          <div className='row'>
+            <div className='col d-flex flex-wrap justify-content-start'>
+              <MovieList movies={trendingMovies} />
+            </div>
+            <div className='row'>
+              <div className='col d-flex flex-wrap justify-content-start'>
+                <MovieList movies={movies} />
+              </div>
+            </div>
+          </div >
         </div>
-      </div >
+      </div>
     </>
-  );
+  )
 }
 
 export default App
