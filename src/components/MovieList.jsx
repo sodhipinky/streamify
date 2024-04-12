@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar'
+import { useNavigate } from 'react-router-dom'
 import 'react-circular-progressbar/dist/styles.css'
 
-function MovieList({ movies, onMovieClick }) {
+function MovieList({ movies }) {
+    const navigate = useNavigate();
     return (
         <>
             {
@@ -10,7 +12,7 @@ function MovieList({ movies, onMovieClick }) {
                     const date = new Date(movie.release_date);
                     const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
                     return (
-                        <div key={index} className='card movie-card font-monospace border-0 position-relative' onClick={() => onMovieClick(movie)}>
+                        <div key={index} className='card movie-card font-monospace border-0 position-relative' onClick={() => navigate(`/movie-details/${movie.id}`)}>
                             <img src={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`} className='card-img-top rounded-5 shadow' alt={movie.title} />
                             <div className='card-body text-start'>
                                 <p className='card-title fw-bold mb-0'>{movie.title}</p>
@@ -38,8 +40,7 @@ function MovieList({ movies, onMovieClick }) {
 }
 
 MovieList.propTypes = {
-    movies: PropTypes.array.isRequired,
-    onMovieClick: PropTypes.func.isRequired
+    movies: PropTypes.array.isRequired
 }
 
 export default MovieList
