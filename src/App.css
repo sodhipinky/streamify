@@ -26,6 +26,15 @@
 .movie-card {
   width: 15rem;
   animation: fadeIn 1s ease-in;
+  overflow-y: hidden;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  /* Enlarge the movie card */
+  transition: transform 0.3s ease-in-out;
+  /* Animate the transformation */
+  overflow-y: hidden;
 }
 
 .small-font {
@@ -55,6 +64,7 @@
 .horizontal-scroll {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .horizontal-scroll .movie-card {
