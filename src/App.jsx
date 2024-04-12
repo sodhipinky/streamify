@@ -101,6 +101,16 @@ function App() {
       <Header />
       <div className='container font-monospace '>
         <div className='row'>
+          <div className='row'>
+            <div className='col d-flex justify-content-center ms-4'>
+              <button className='fw-bold rounded-circle mt-5 scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
+              <h3 className='mt-5 p-3 label rounded-pill'>Trending this week</h3>
+              <button className='fw-bold rounded-circle mt-5 scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
+            </div>
+            <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
+              <MovieList movies={trendingMovies} className="movie-card" />
+            </div>
+          </div >
           <div className='col d-flex justify-content-center ms-4'>
             <button className='fw-bold rounded-circle mt-5 scroll-left' onClick={() => scroll(-1, topRatedScrollContainer)}>&lt;</button>
             <h3 className='mt-5 p-3 label rounded-pill'>Top Rated Movies</h3>
@@ -108,16 +118,6 @@ function App() {
           </div>
           <div className='horizontal-scroll mb-0' ref={topRatedScrollContainer}>
             <MovieList movies={topRatedMovies} className="movie-card" />
-          </div>
-        </div >
-        <div className='row'>
-          <div className='col d-flex justify-content-center ms-4'>
-            <button className='fw-bold rounded-circle mt-5 scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
-            <h3 className='mt-5 p-3 label rounded-pill'>Trending this week</h3>
-            <button className='fw-bold rounded-circle mt-5 scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
-          </div>
-          <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
-            <MovieList movies={trendingMovies} className="movie-card" />
           </div>
         </div >
       </div>
