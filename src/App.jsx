@@ -7,7 +7,9 @@ import Header from './components/Header';
 function App() {
   const [movies, setMovies] = useState([]);
   const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
+  const [trendingMoviesToday, setTrendingMoviesToday] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +52,14 @@ function App() {
         .catch(error => setError(error));
     };
     fetchTrendingMoviesThisWeek();
+
+    const fetchTrendingMoviesToday = async () => {
+      await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=4c0193b45b042c536215774762ee44b5')
+        .then(response => response.json())
+        .then(data => setTrendingMoviesToday(data.results))
+        .catch(error => setError(error));
+    };
+    fetchTrendingMoviesToday();
 
     const fetchTopRatedMovies = async () => {
       await fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=4c0193b45b042c536215774762ee44b5')
@@ -99,15 +109,19 @@ function App() {
   return (
     <>
       <Header />
-      <div className='container font-monospace mt-5 p-5'>
+      <div className='container font-monospace mt-5'>
         <div className='row'>
-          <div className='col d-flex justify-content-center p-2'>
+          <div className='col d-flex justify-content-start align-items-center mt-5 ms-3'>
             <button className='fw-bold rounded-circle scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
-            <h3 className='p-3 label rounded-pill'>Trending this week</h3>
+            <p className='d-inline-block fs-4 fw-bold mb-0'>Trending</p>
+            <div className='col-3 d-flex justify-content-evenly ms-3 align-items-center'>
+              <button className={`btn ${trendingTimePeriod === 'day' ? 'btn-danger' : 'btn-secondary'} rounded-pill me-1 p-0 w-50`} onClick={() => setTrendingTimePeriod('day')}>Today</button>
+              <button className={`btn ${trendingTimePeriod === 'week' ? 'btn-danger' : 'btn-secondary'} rounded-pill me-1 p-0 w-50`} onClick={() => setTrendingTimePeriod('week')}>This Week</button>
+            </div>
             <button className='fw-bold rounded-circle scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
           </div>
           <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
-            <MovieList movies={trendingMoviesThisWeek} className="movie-card" />
+            <MovieList movies={trendingTimePeriod === 'day' ? trendingMoviesToday : trendingMoviesThisWeek} className="movie-card" />
           </div>
         </div >
       </div>
