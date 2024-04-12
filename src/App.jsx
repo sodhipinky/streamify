@@ -6,7 +6,7 @@ import Header from './components/Header';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,13 +43,13 @@ function App() {
 
 
   useEffect(() => {
-    const fetchTrendingMovies = async () => {
+    const fetchTrendingMoviesThisWeek = async () => {
       await fetch('https://api.themoviedb.org/3/trending/movie/week?api_key=4c0193b45b042c536215774762ee44b5')
         .then(response => response.json())
-        .then(data => setTrendingMovies(data.results))
+        .then(data => setTrendingMoviesThisWeek(data.results))
         .catch(error => setError(error));
     };
-    fetchTrendingMovies();
+    fetchTrendingMoviesThisWeek();
 
     const fetchTopRatedMovies = async () => {
       await fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=4c0193b45b042c536215774762ee44b5')
@@ -99,25 +99,15 @@ function App() {
   return (
     <>
       <Header />
-      <div className='container font-monospace '>
+      <div className='container font-monospace mt-5 p-5'>
         <div className='row'>
-          <div className='row'>
-            <div className='col d-flex justify-content-center ms-4'>
-              <button className='fw-bold rounded-circle mt-5 scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
-              <h3 className='mt-5 p-3 label rounded-pill'>Trending this week</h3>
-              <button className='fw-bold rounded-circle mt-5 scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
-            </div>
-            <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
-              <MovieList movies={trendingMovies} className="movie-card" />
-            </div>
-          </div >
-          <div className='col d-flex justify-content-center ms-4'>
-            <button className='fw-bold rounded-circle mt-5 scroll-left' onClick={() => scroll(-1, topRatedScrollContainer)}>&lt;</button>
-            <h3 className='mt-5 p-3 label rounded-pill'>Top Rated Movies</h3>
-            <button className='fw-bold rounded-circle mt-5 scroll-right' onClick={() => scroll(1, topRatedScrollContainer)}>&gt;</button>
+          <div className='col d-flex justify-content-center p-2'>
+            <button className='fw-bold rounded-circle scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
+            <h3 className='p-3 label rounded-pill'>Trending this week</h3>
+            <button className='fw-bold rounded-circle scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
           </div>
-          <div className='horizontal-scroll mb-0' ref={topRatedScrollContainer}>
-            <MovieList movies={topRatedMovies} className="movie-card" />
+          <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
+            <MovieList movies={trendingMoviesThisWeek} className="movie-card" />
           </div>
         </div >
       </div>
