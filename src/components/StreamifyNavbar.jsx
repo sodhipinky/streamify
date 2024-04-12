@@ -16,12 +16,6 @@ function StreamifyNavbar({ searchFieldWidth, genres }) {
                     <Nav className="me-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">About</Nav.Link>
-                        <NavDropdown title='Movie Lists' id="basic-nav-dropdown" className="align-content-center">
-                            <NavDropdown.Item eventKey={1} defaultValue={"popular"} className='small-font' href="#">Popular</NavDropdown.Item>
-                            <NavDropdown.Item eventKey={2} defaultValue={"top_rated"} className='small-font' href="#">Top Rated</NavDropdown.Item>
-                            <NavDropdown.Item eventKey={3} defaultValue={"now_playing"} className='small-font' href="#">Now Playing</NavDropdown.Item>
-                            <NavDropdown.Item eventKey={4} defaultValue={"upcoming"} className='small-font' href="#">Upcoming</NavDropdown.Item>
-                        </NavDropdown>
                         <NavDropdown title='Genre' id="basic-nav-dropdown" className="align-content-center">
                             {
                                 genres.map((genre, index) => (

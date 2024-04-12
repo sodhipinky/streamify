@@ -24,7 +24,7 @@ function Header() {
         };
     });
 
-    const searchFieldWidth = windowWidth <= 992 ? 'w-25' : 'w-75';
+    const searchFieldWidth = windowWidth <= 992 ? 'w-25' : 'w-100';
 
     return (
         <>
