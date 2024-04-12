@@ -81,7 +81,7 @@ function App() {
       <div className='container-fluid font-monospace '>
         <div className='row'>
           <div className='col d-flex justify-content-start ms-4'>
-            <h3 className='mt-5 p-3 fs-5 label'>Trending Movies</h3>
+            <h3 className='mt-5 p-3 label rounded-pill'>Trending Movies</h3>
           </div>
           <div className='row'>
             <div className='col d-flex flex-wrap justify-content-start'>
