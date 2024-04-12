@@ -68,3 +68,7 @@
   color: #fff;
   border: none;
 }
+
+body {
+  padding-top: 60px;
+}
