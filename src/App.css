@@ -69,18 +69,36 @@
   background-color: #000;
   color: #fff;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .horizontal-scroll {
   display: flex;
   overflow-x: auto;
-  white-space: nowrap;
-  text-wrap: wrap;
 }
 
 .horizontal-scroll .movie-card {
   flex: 0 0 auto;
+}
+
+#scroll-left,
+#scroll-right {
+  color: black;
+  background-color: white;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+}
+
+#scroll-left {
+  margin-right: 10px;
+}
+
+#scroll-right {
+  margin-left: 10px;
 }
 
 body {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
@@ -9,6 +9,16 @@ function App() {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const scrollContainer = useRef(null);
+  const scroll = (direction) => {
+    if (scrollContainer.current) {
+      scrollContainer.current.scrollTo({
+        left: scrollContainer.current.scrollLeft + direction * 300,
+        behavior: 'smooth'
+      });
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true); // sets the isLoading state to true
@@ -80,10 +90,12 @@ function App() {
       <Header />
       <div className='container-fluid font-monospace '>
         <div className='row'>
-          <div className='col d-flex justify-content-start ms-4'>
+          <div className='col d-flex justify-content-center ms-4'>
+            <button className='fw-bold rounded-circle mt-5' id="scroll-left" onClick={() => scroll(-1)}>&lt;</button>
             <h3 className='mt-5 p-3 label rounded-pill'>Trending Movies</h3>
+            <button className='fw-bold rounded-circle mt-5' id="scroll-right" onClick={() => scroll(1)}>&gt;</button>
           </div>
-          <div className='horizontal-scroll'>
+          <div className='horizontal-scroll mb-0' ref={scrollContainer}>
             <MovieList movies={trendingMovies} />
           </div>
           <div className='row'>
