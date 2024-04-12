@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
 import Header from './components/Header';
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -12,8 +13,10 @@ function App() {
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [showMovieDetails, setShowMovieDetails] = useState(false);
 
-  const topRatedScrollContainer = useRef(null);
+  // const topRatedScrollContainer = useRef(null);
   const trendingScrollContainer = useRef(null);
 
   const scroll = (direction, ref) => {
@@ -121,8 +124,11 @@ function App() {
             <button className='fw-bold rounded-circle scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
           </div>
           <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
-            <MovieList movies={trendingTimePeriod === 'day' ? trendingMoviesToday : trendingMoviesThisWeek} className="movie-card" />
+            <MovieList movies={trendingTimePeriod === 'day' ? trendingMoviesToday : trendingMoviesThisWeek} onMovieClick={movie => { setSelectedMovie(movie); setShowMovieDetails(true) }} className="movie-card" />
           </div>
+          {
+            showMovieDetails ? <MovieDetails movie={selectedMovie} /> : null
+          }
         </div >
       </div>
     </>
