@@ -8,6 +8,7 @@ function MovieDetails() {
     const [movie, setMovie] = useState(null);
     const [movieCredits, setMovieCredits] = useState(null);
     const [certification, setCertification] = useState('Not Rated');
+    const [movieDetails, setMovieDetails] = useState(null);
     const [, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -50,6 +51,21 @@ function MovieDetails() {
                 });
         }
         fetchReleaseDates();
+
+        const movieDetailsData = async () => {
+            setIsLoading(true);
+            await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=4c0193b45b042c536215774762ee44b5`)
+                .then(response => response.json())
+                .then(data => {
+                    setMovieDetails(data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false);
+                });
+        }
+        movieDetailsData();
     }, [movieId]);
 
     if (!movie) {
@@ -107,7 +123,7 @@ function MovieDetails() {
                                 <p className="card-text fs-6">
                                     {movie.overview}
                                 </p>
-                                <div className="row mt-5">
+                                <div className="row mt-4">
                                     <div className="col">
                                         <p className="card-text fs-5 mb-0">
                                             {director ? director.name : 'Unknown'}
@@ -119,6 +135,20 @@ function MovieDetails() {
                                             {producer ? producer.name : 'Unknown'}
                                         </p>
                                         <p className='card-text fs-5 fw-bold mb-0'>Producer </p>
+                                    </div>
+                                </div>
+                                <div className="row mt-3">
+                                    <div className="col">
+                                        <p className="card-text fs-5 mb-0">
+                                            {movieDetails.budget ? `$${movieDetails.budget}` : 'Unknown'}
+                                        </p>
+                                        <p className='card-text fs-5 fw-bold mb-0'>Budget </p>
+                                    </div>
+                                    <div className="col">
+                                        <p className="card-text fs-5 mb-0">
+                                        {movieDetails.revenue ? `$${movieDetails.revenue}` : 'Unknown'}
+                                        </p>
+                                        <p className='card-text fs-5 fw-bold mb-0'>Revenue </p>
                                     </div>
                                 </div>
                             </div>
