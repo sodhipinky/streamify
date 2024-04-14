@@ -1,8 +1,5 @@
 #root {
-  max-width: 100%;
-  margin: 0 auto;
-  /* padding: 2rem; */
-  text-align: center;
+  width: 100%;
 }
 
 .card {
@@ -35,6 +32,7 @@
   transition: transform 0.3s ease-in-out;
   /* Animate the transformation */
   overflow-y: hidden;
+  cursor: pointer;
 }
 
 .small-font {
@@ -89,4 +87,50 @@
 
 .scroll-right {
   margin-left: 10px;
+}
+
+.movie-banner {
+  height: 500px;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+}
+
+.movie-banner-overlay {
+  height: 100%;
+  background: rgba(33, 32, 32, 0.7);
+}
+
+.movie-banner-poster-overlay {
+  height: 100%;
+  background: rgba(33, 32, 32, 1);
+  padding: 0 15px;
+}
+
+.movie-details{
+  color: white;
+  text-wrap: wrap;
+  text-align: left;
+}
+
+.movie-detail-card {
+  width: 15rem;
+  overflow-y: hidden;
+}
+
+.detail-rating {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  /* top: 15px;
+  left: 30px; */
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.movie-cast-card {
+  width: 15rem;
 }

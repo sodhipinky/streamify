@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 function StreamifyNavbar({ searchFieldWidth, genres }) {
 
     return (
-        <Navbar fixed='top' collapseOnSelect bg="dark" variant='dark' expand="lg" className='font-monospace pb-2 '>
+        <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" className='font-monospace pb-2'>
             <Container fluid>
                 <Navbar.Brand href="#home">
                     <img src={Logo} alt={"Streamify"} width={55} className="d-inline-block me-2" />

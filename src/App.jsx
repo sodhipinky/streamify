@@ -116,7 +116,7 @@ function App() {
           <>
             <div className='container font-monospace mt-5'>
               <div className='row'>
-                <div className='col d-flex justify-content-start align-items-center mt-5 ms-3'>
+                <div className='col d-flex justify-content-center align-items-center mt-5 ms-3'>
                   <button className='fw-bold rounded-circle scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
                   <p className='d-inline-block fs-4 fw-bold mb-0'>Trending</p>
                   <div className='col-md-4 d-flex justify-content-evenly ms-3 align-items-center'>
