@@ -6,6 +6,10 @@ import MovieList from './components/MovieList';
 import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
 
+function Spinner() {
+  return <div className="spinner"></div>;
+}
+
 function App() {
   const [movies, setMovies] = useState([]);
   const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
@@ -77,7 +81,8 @@ function App() {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col d-flex justify-content-center'>
-            <h1>Loading...</h1>
+            {/* <h1>Loading...</h1> */}
+            <Spinner />
           </div>
         </div>
       </div>
