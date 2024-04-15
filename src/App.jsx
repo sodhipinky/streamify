@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PaginatedMovies from './components/PaginatedMovies';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import MovieList from './components/MovieList';
+import TrendingMovies from './components/TrendingMovies';
 import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
 
@@ -119,34 +119,15 @@ function App() {
       <Routes>
         <Route path='/' element={
           <>
-            <div className='container font-monospace mt-5'>
-              <div className='row'>
-                <div className='col d-flex justify-content-center align-items-center mt-5 ms-3'>
-                  <button className='fw-bold rounded-circle scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
-                  <p className='d-inline-block fs-4 fw-bold mb-0'>Trending</p>
-                  <div className='col-md-4 d-flex justify-content-evenly ms-3 align-items-center'>
-                    <button className={`btn ${trendingTimePeriod === 'day' ? 'btn-danger' : 'btn-secondary'} rounded-pill me-1 p-1 w-50`} onClick={() => setTrendingTimePeriod('day')}>Today</button>
-                    <button className={`btn ${trendingTimePeriod === 'week' ? 'btn-danger' : 'btn-secondary'} rounded-pill me-1 p-1 w-50`} onClick={() => setTrendingTimePeriod('week')}>This Week</button>
-                  </div>
-                  <button className='fw-bold rounded-circle scroll-right' onClick={() => scroll(1, trendingScrollContainer)}>&gt;</button>
-                </div>
-                <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
-                  <MovieList movies={trendingTimePeriod === 'day' ? trendingMoviesToday : trendingMoviesThisWeek} className="movie-card" />
-                </div >
-              </div>
-            </div>
-            <div className="container font-monospace mt-5">
-              <div className="row">
-                <div className="col d-flex justify-content-center">
-                  <p className="fw-bold fs-4">All Movies</p>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <PaginatedMovies movies={movies} />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TrendingMovies
+              trendingTimePeriod={trendingTimePeriod}
+              setTrendingTimePeriod={setTrendingTimePeriod}
+              trendingMoviesToday={trendingMoviesToday}
+              trendingMoviesThisWeek={trendingMoviesThisWeek}
+              scroll={scroll}
+              trendingScrollContainer={trendingScrollContainer}
+            />
+            <PaginatedMovies movies={movies} />
           </>
         } />
         <Route path='/movie-details/:movieId' element={<MovieDetails />} />
