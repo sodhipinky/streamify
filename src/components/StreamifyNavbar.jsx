@@ -1,5 +1,6 @@
 import Logo from '../assets/favicon.ico'
 import { Container, Nav, Navbar, NavDropdown, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 
 function StreamifyNavbar({ searchFieldWidth, genres }) {
@@ -14,7 +15,7 @@ function StreamifyNavbar({ searchFieldWidth, genres }) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#link">About</Nav.Link>
+                        <Nav.Link as={Link} to="/about">About</Nav.Link>
                         <NavDropdown title='Movies' id="basic-nav-dropdown" className="align-content-center">
                             <NavDropdown.Item className='small-font' href="#">Popular</NavDropdown.Item>
                             <NavDropdown.Item className='small-font' href="#">Now Playing</NavDropdown.Item>

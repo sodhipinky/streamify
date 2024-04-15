@@ -1,6 +1,8 @@
 // import Navbar from './Navbar'
 import StreamifyNavbar from "./StreamifyNavbar"
 import { useEffect, useState } from "react"
+import { Routes, Route } from "react-router-dom";
+import About from "./About";
 
 function Header() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -33,6 +35,9 @@ function Header() {
                     searchFieldWidth={searchFieldWidth}
                     genres={genres}
                 />
+                <Routes>
+                    <Route path='/about' element={<About />} />
+                </Routes>
             </div>
         </>
     )
