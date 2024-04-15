@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PaginatedMovies from './components/PaginatedMovies';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
 import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
 
-function Spinner() {
+export function Spinner() {
   return <div className="spinner"></div>;
 }
 
@@ -132,6 +133,18 @@ function App() {
                 <div className='horizontal-scroll mb-0' ref={trendingScrollContainer}>
                   <MovieList movies={trendingTimePeriod === 'day' ? trendingMoviesToday : trendingMoviesThisWeek} className="movie-card" />
                 </div >
+              </div>
+            </div>
+            <div className="container font-monospace mt-5">
+              <div className="row">
+                <div className="col d-flex justify-content-center">
+                  <p className="fw-bold fs-4">All Movies</p>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <PaginatedMovies movies={movies} />
+                  </div>
+                </div>
               </div>
             </div>
           </>

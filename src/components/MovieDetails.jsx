@@ -146,7 +146,7 @@ function MovieDetails() {
                                     </div>
                                     <div className="col">
                                         <p className="card-text fs-5 mb-0">
-                                        {movieDetails.revenue ? `$${movieDetails.revenue}` : 'Unknown'}
+                                            {movieDetails.revenue ? `$${movieDetails.revenue}` : 'Unknown'}
                                         </p>
                                         <p className='card-text fs-5 fw-bold mb-0'>Revenue </p>
                                     </div>
