@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
@@ -10,7 +10,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
   const [trendingMoviesToday, setTrendingMoviesToday] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [, setTopRatedMovies] = useState([]);
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

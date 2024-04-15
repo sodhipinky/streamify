@@ -14,7 +14,6 @@ function StreamifyNavbar({ searchFieldWidth, genres }) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">About</Nav.Link>
                         <NavDropdown title='Movies' id="basic-nav-dropdown" className="align-content-center">
                             <NavDropdown.Item className='small-font' href="#">Popular</NavDropdown.Item>
