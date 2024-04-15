@@ -81,7 +81,6 @@ function App() {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col d-flex justify-content-center'>
-            {/* <h1>Loading...</h1> */}
             <Spinner />
           </div>
         </div>
@@ -106,7 +105,7 @@ function App() {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col d-flex justify-content-center'>
-            <h1>No movies found</h1>
+            <Spinner />
           </div>
         </div>
       </div>
