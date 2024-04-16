@@ -9,6 +9,7 @@ import MovieDetails from './components/MovieDetails';
 import MovieTypePage from './components/MovieTypePage';
 import About from './components/About';
 import MovieDisplayByGenre from './components/MovieDisplayByGenre';
+import SearchResults from './components/SearchResults';
 
 export function Spinner() {
   return <div className="spinner"></div>;
@@ -133,8 +134,10 @@ function App() {
         movieTypes={movieTypes}
         genres={genres}
         isLoading={isLoading}
+        apiKey={apiKey}
       />
       <Routes>
+        <Route path='/search-results' element={<SearchResults />} />
         <Route path='/' element={
           <>
             <TrendingMovies
