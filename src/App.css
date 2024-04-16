@@ -158,14 +158,16 @@
 .navbar-link,
 .navbar-link:visited,
 .navbar-link:focus,
-.navbar-link:hover {
+.navbar-link:hover,
+.navbar-link:active {
   color: black !important;
   text-decoration: none !important;
   background-color: transparent !important;
 }
 
 .dropdown-item-custom:focus,
-.dropdown-item-custom:hover {
+.dropdown-item-custom:hover,
+.dropdown-item:active {
   color: black !important;
   text-decoration: none !important;
   background-color: transparent !important;
