@@ -1,6 +1,8 @@
 import Logo from '../assets/favicon.ico'
-import { Container, Nav, Navbar, NavDropdown, Form } from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { InputGroup, FormControl } from 'react-bootstrap';
+import { Search } from 'react-bootstrap-icons';
 import propTypes from 'prop-types'
 
 function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
@@ -14,7 +16,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav className="me-auto fs-5">
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
                         <NavDropdown title='Movies' id="basic-nav-dropdown" className="align-content-center">
                             {
@@ -44,14 +46,19 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                             }
                         </NavDropdown>
                     </Nav>
-                    <Form className="d-flex justify-content-center">
-                        <Form.Control
-                            type="search"
-                            placeholder="Search"
-                            className={`ms-2 me-2 rounded-pill border-0 ${searchFieldWidth}`}
-                            aria-label="Search"
-                        />
-                    </Form>
+                    <InputGroup>
+                        <div className="position-relative w-100 me-5">
+                            <FormControl
+                                type="search"
+                                placeholder="Search"
+                                className={`ms-4 fs-5 rounded-pill border-1 pe-5 ${searchFieldWidth}`}
+                                aria-label="Search"
+                            />
+                            <InputGroup.Text className="border-0 bg-transparent rounded-end-pill position-absolute top-50 translate-middle-y end-0">
+                                <Search />
+                            </InputGroup.Text>
+                        </div>
+                    </InputGroup>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
