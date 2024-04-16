@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 
 const TrendingMovies = ({ trendingTimePeriod, setTrendingTimePeriod, trendingMoviesToday, trendingMoviesThisWeek, scroll, trendingScrollContainer }) => {
     return (
-        <div className='container font-monospace mt-5'>
+        <div className='container font-monospace'>
             <div className='row'>
                 <div className='col d-flex justify-content-center align-items-center mt-5 ms-3'>
                     <button className='fw-bold rounded-circle scroll-left' onClick={() => scroll(-1, trendingScrollContainer)}>&lt;</button>
