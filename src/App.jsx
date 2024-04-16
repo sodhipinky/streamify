@@ -47,7 +47,7 @@ function App() {
   useEffect(() => {
     setIsLoading(true); // sets the isLoading state to true
     const fetchPages = async () => {
-      const pages = Array.from({ length: 10 }, (_, i) => i + 1); // creates an array [1, 2, ..., 10]
+      const pages = Array.from({ length: 20 }, (_, i) => i + 1); // creates an array [1, 2, ..., 10]
       const allMovies = [];
 
       for (const page of pages) { // fetches movies from pages 1 to 10
