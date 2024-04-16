@@ -23,10 +23,6 @@ function App() {
   const [trendingMoviesToday, setTrendingMoviesToday] = useState([]);
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
   const [genres, setGenres] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-  const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -93,76 +89,6 @@ function App() {
         });
     }
     fetchGenres();
-
-    const fetchPopularMovies = async () => {
-      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-      const allPopularMovies = [];
-
-      for (const page of pages) {
-        await fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${apiKey}`)
-          .then(response => response.json())
-          .then(data => allPopularMovies.push(...data.results))
-          .catch(error => setError(error));
-      }
-      setPopularMovies(allPopularMovies)
-      setIsLoading(false)
-    }
-    fetchPopularMovies();
-
-    const fetchNowPlayingMovies = async () => {
-      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-      const allNowPlayingMovies = [];
-
-      for (const page of pages) {
-        await fetch(`https://api.themoviedb.org/3/movie/now_playing?page=${page}&api_key=${apiKey}`)
-          .then(response => response.json())
-          .then(data => allNowPlayingMovies.push(...data.results))
-          .catch(error => setError(error));
-      }
-      setNowPlayingMovies(allNowPlayingMovies)
-      setIsLoading(false)
-    }
-    fetchNowPlayingMovies();
-
-    const fetchUpcomingMovies = async () => {
-      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-      const allUpcomingMovies = [];
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      for (const page of pages) {
-        await fetch(`https://api.themoviedb.org/3/movie/upcoming?page=${page}&api_key=${apiKey}`)
-          .then(response => response.json())
-          .then(data => {
-            const upcomingMovies = data.results.filter(movie => {
-              const releaseDate = new Date(movie.release_date);
-              return releaseDate >= today;
-            });
-            allUpcomingMovies.push(...upcomingMovies);
-          })
-          .catch(error => setError(error));
-      }
-      allUpcomingMovies.sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
-      setUpcomingMovies(allUpcomingMovies)
-      setIsLoading(false)
-    }
-    fetchUpcomingMovies();
-
-    const fetchTopRatedMovies = async () => {
-      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-      const allTopRatedMovies = [];
-
-      for (const page of pages) {
-        await fetch(`https://api.themoviedb.org/3/movie/top_rated?page=${page}&api_key=${apiKey}`)
-          .then(response => response.json())
-          .then(data => allTopRatedMovies.push(...data.results))
-          .catch(error => setError(error));
-      }
-      allTopRatedMovies.sort((a, b) => b.vote_average - a.vote_average)
-      setTopRatedMovies(allTopRatedMovies)
-      setIsLoading(false)
-    }
-    fetchTopRatedMovies();
   });
 
   if (isLoading) {
@@ -206,10 +132,6 @@ function App() {
       <Header
         movieTypes={movieTypes}
         genres={genres}
-        popularMovies={popularMovies}
-        nowPlayingMovies={nowPlayingMovies}
-        upcomingMovies={upcomingMovies}
-        topRatedMovies={topRatedMovies}
         isLoading={isLoading}
       />
       <Routes>
@@ -235,11 +157,8 @@ function App() {
               path={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}
               element={
                 <MovieTypePage
-                  movieType={movieType}
-                  popularMovies={popularMovies}
-                  nowPlayingMovies={nowPlayingMovies}
-                  upcomingMovies={upcomingMovies}
-                  topRatedMovies={topRatedMovies}
+                  apiKey={apiKey}
+                 movieType={movieType}
                 />
               }
             />
