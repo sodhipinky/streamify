@@ -19,6 +19,7 @@ function App() {
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const apiKey = '4c0193b45b042c536215774762ee44b5';
 
   // const topRatedScrollContainer = useRef(null);
   const trendingScrollContainer = useRef(null);
@@ -39,7 +40,7 @@ function App() {
       const allMovies = [];
 
       for (const page of pages) { // fetches movies from pages 1 to 10
-        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=4c0193b45b042c536215774762ee44b5`)
+        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=${apiKey}`)
           .then(response => response.json())
           .then(pageData => allMovies.push(...pageData.results))
           .catch(error => setError(error));
@@ -53,7 +54,7 @@ function App() {
 
   useEffect(() => {
     const fetchTrendingMoviesThisWeek = async () => {
-      await fetch('https://api.themoviedb.org/3/trending/movie/week?api_key=4c0193b45b042c536215774762ee44b5')
+      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`)
         .then(response => response.json())
         .then(data => setTrendingMoviesThisWeek(data.results))
         .catch(error => setError(error));
@@ -61,7 +62,7 @@ function App() {
     fetchTrendingMoviesThisWeek();
 
     const fetchTrendingMoviesToday = async () => {
-      await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=4c0193b45b042c536215774762ee44b5')
+      await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
         .then(response => response.json())
         .then(data => setTrendingMoviesToday(data.results))
         .catch(error => setError(error));
@@ -69,7 +70,7 @@ function App() {
     fetchTrendingMoviesToday();
 
     const fetchTopRatedMovies = async () => {
-      await fetch('https://api.themoviedb.org/3/movie/top_rated?api_key=4c0193b45b042c536215774762ee44b5')
+      await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`)
         .then(response => response.json())
         .then(data => setTopRatedMovies(data.results))
         .catch(error => setError(error));
@@ -115,7 +116,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header apiKey={apiKey} />
       <Routes>
         <Route path='/' element={
           <>

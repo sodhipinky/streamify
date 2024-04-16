@@ -9,7 +9,7 @@ function MovieDetails() {
     const [movieCredits, setMovieCredits] = useState(null);
     const [certification, setCertification] = useState('Not Rated');
     const [movieDetails, setMovieDetails] = useState(null);
-    const [, setIsLoading] = useState(true);
+    const [, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchMovieDetails = async () => {

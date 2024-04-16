@@ -1,22 +1,91 @@
-// import Navbar from './Navbar'
+import PropTypes from 'prop-types';
 import StreamifyNavbar from "./StreamifyNavbar"
 import { useEffect, useState } from "react"
 import { Routes, Route } from "react-router-dom";
+import { Spinner } from "../App";
 import About from "./About";
 
-function Header() {
+function Header({ apiKey }) {
     const movieTypes = ['Popular', 'Now Playing', 'Upcoming', 'Top Rated'];
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [genres, setGenres] = useState([]);
+    const [popularMovies, setPopularMovies] = useState([]);
+    const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchGenres = async () => {
-            await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=4c0193b45b042c536215774762ee44b5')
+            await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
                 .then(response => response.json())
-                .then(data => setGenres(data.genres))
-                .catch(error => console.error(error));
+                .then(data => {
+                    setGenres(data.genres)
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false)
+                });
         }
         fetchGenres();
+
+        const fetchPopularMovies = async () => {
+            await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    setPopularMovies(data.results)
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false)
+                });
+        }
+        fetchPopularMovies();
+
+        const fetchNowPlayingMovies = async () => {
+            await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    setNowPlayingMovies(data.results)
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false)
+                });
+        }
+        fetchNowPlayingMovies();
+
+        const fetchUpcomingMovies = async () => {
+            await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    setUpcomingMovies(data.results)
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false)
+                });
+        }
+        fetchUpcomingMovies();
+
+        const fetchTopRatedMovies = async () => {
+            await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    setTopRatedMovies(data.results)
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setIsLoading(false)
+                });
+        }
+        fetchTopRatedMovies();
+
         const handleResize = () => {
             setWindowWidth(window.innerWidth);
         };
@@ -26,6 +95,10 @@ function Header() {
             window.removeEventListener('resize', handleResize);
         };
     });
+
+    if (isLoading) {
+        return <Spinner />;
+    }
 
     const searchFieldWidth = windowWidth <= 992 ? 'w-25' : 'w-100';
 
@@ -43,6 +116,10 @@ function Header() {
             </div>
         </>
     )
+}
+
+Header.propTypes = {
+    apiKey: PropTypes.string.isRequired
 }
 
 export default Header
