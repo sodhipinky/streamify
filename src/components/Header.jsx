@@ -4,6 +4,10 @@ import { useEffect, useState } from "react"
 import { Routes, Route } from "react-router-dom";
 import { Spinner } from "../App";
 import About from "./About";
+import PopularMovies from "./PopularMovies";
+import NowPlayingMovies from "./NowPlayingMovies";
+import UpcomingMovies from "./UpcomingMovies";
+import TopRatedMovies from "./TopRatedMovies";
 
 function Header({ apiKey }) {
     const movieTypes = ['Popular', 'Now Playing', 'Upcoming', 'Top Rated'];
@@ -112,6 +116,10 @@ function Header({ apiKey }) {
                 />
                 <Routes>
                     <Route path='/about' element={<About />} />
+                    <Route path='/popular' element={<PopularMovies popularMovies={popularMovies} />} />
+                    <Route path='/now-playing' element={<NowPlayingMovies nowPlayingMovies={nowPlayingMovies} />} />
+                    <Route path='/upcoming' element={<UpcomingMovies upcomingMovies={upcomingMovies} />} />
+                    <Route path='/top-rated' element={<TopRatedMovies topRatedMovies={topRatedMovies} />} />
                 </Routes>
             </div>
         </>

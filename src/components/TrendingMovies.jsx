@@ -1,7 +1,7 @@
 import MovieList from './MovieList';
 import propTypes from 'prop-types';
 
-const TrendingMovies = ({ trendingTimePeriod, setTrendingTimePeriod, trendingMoviesToday, trendingMoviesThisWeek, scroll, trendingScrollContainer }) => {
+function TrendingMovies({ trendingTimePeriod, setTrendingTimePeriod, trendingMoviesToday, trendingMoviesThisWeek, scroll, trendingScrollContainer }) {
     return (
         <div className='container font-monospace'>
             <div className='row'>
