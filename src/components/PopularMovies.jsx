@@ -5,20 +5,20 @@ import { useState } from "react";
 
 const PER_PAGE = 20;
 
-function PopularMovies({ PopularMovies }) {
+function PopularMovies({ popularMovies }) {
     const [currentPage, setCurrentPage] = useState(0);
     const offset = currentPage * PER_PAGE;
 
-    const currentPageData = PopularMovies
+    const currentPageData = popularMovies
         .slice(offset, offset + PER_PAGE);
 
-    const pageCount = Math.ceil(PopularMovies.length / PER_PAGE);
+    const pageCount = Math.ceil(popularMovies.length / PER_PAGE);
 
     return (
         <div className="container font-monospace mt-5">
             <div className="row">
                 <div className="col d-flex justify-content-center">
-                    <p className="fw-bold fs-4">Popular Movies</p>
+                    <p className="fw-bold fs-4">Popular</p>
                 </div>
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around ">
@@ -45,7 +45,7 @@ function PopularMovies({ PopularMovies }) {
 }
 
 PopularMovies.propTypes = {
-    PopularMovies: propTypes.array.isRequired
+    popularMovies: propTypes.array.isRequired
 }
 
 export default PopularMovies;
