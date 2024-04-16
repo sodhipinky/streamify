@@ -6,17 +6,26 @@ import './App.css';
 import TrendingMovies from './components/TrendingMovies';
 import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
+import MovieTypePage from './components/MovieTypePage';
+import About from './components/About';
 
 export function Spinner() {
   return <div className="spinner"></div>;
 }
 
 function App() {
+
+  const movieTypes = ['Popular', 'Now Playing', 'Upcoming', 'Top Rated'];
+
   const [movies, setMovies] = useState([]);
   const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
   const [trendingMoviesToday, setTrendingMoviesToday] = useState([]);
-  const [, setTopRatedMovies] = useState([]);
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
+  const [genres, setGenres] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const apiKey = '4c0193b45b042c536215774762ee44b5';
@@ -69,12 +78,82 @@ function App() {
     };
     fetchTrendingMoviesToday();
 
+    const fetchGenres = async () => {
+      await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          setGenres(data.genres)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false)
+        });
+    }
+    fetchGenres();
+
+    const fetchPopularMovies = async () => {
+      await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          setPopularMovies(data.results)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false)
+        });
+    }
+    fetchPopularMovies();
+
+    const fetchNowPlayingMovies = async () => {
+      await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          setNowPlayingMovies(data.results)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false)
+        });
+    }
+    fetchNowPlayingMovies();
+
+    const fetchUpcomingMovies = async () => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          const upcoming = data.results.filter(movie => {
+            const releaseDate = new Date(movie.release_date);
+            releaseDate.setHours(0, 0, 0, 0);
+            return releaseDate >= today;
+          })
+          setUpcomingMovies(upcoming)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false)
+        });
+    }
+    fetchUpcomingMovies();
+
     const fetchTopRatedMovies = async () => {
       await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`)
         .then(response => response.json())
-        .then(data => setTopRatedMovies(data.results))
-        .catch(error => setError(error));
-    };
+        .then(data => {
+          setTopRatedMovies(data.results)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          console.error(error)
+          setIsLoading(false)
+        });
+    }
     fetchTopRatedMovies();
   });
 
@@ -116,7 +195,15 @@ function App() {
 
   return (
     <Router>
-      <Header apiKey={apiKey} />
+      <Header
+        movieTypes={movieTypes}
+        genres={genres}
+        popularMovies={popularMovies}
+        nowPlayingMovies={nowPlayingMovies}
+        upcomingMovies={upcomingMovies}
+        topRatedMovies={topRatedMovies}
+        isLoading={isLoading}
+      />
       <Routes>
         <Route path='/' element={
           <>
@@ -132,6 +219,24 @@ function App() {
           </>
         } />
         <Route path='/movie-details/:movieId' element={<MovieDetails />} />
+        <Route path='/about' element={<About />} />
+        {
+          movieTypes.map((movieType, index) => (
+            <Route
+              key={index}
+              path={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}
+              element={
+                <MovieTypePage
+                  movieType={movieType}
+                  popularMovies={popularMovies}
+                  nowPlayingMovies={nowPlayingMovies}
+                  upcomingMovies={upcomingMovies}
+                  topRatedMovies={topRatedMovies}
+                />
+              }
+            />
+          ))
+        }
       </Routes>
     </Router >
   )

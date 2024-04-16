@@ -19,7 +19,13 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                         <NavDropdown title='Movies' id="basic-nav-dropdown" className="align-content-center">
                             {
                                 movieTypes.map((movieType, index) => (
-                                    <NavDropdown.Item key={index} className='small-font' href="#">{movieType}</NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        key={index}
+                                        className='small-font dropdown-item-custom'
+                                        as={Link}
+                                        to={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}>
+                                            {movieType}
+                                    </NavDropdown.Item>
                                 ))
                             }
                         </NavDropdown>

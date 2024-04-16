@@ -24,6 +24,10 @@ function UpcomingMovies({ upcomingMovies }) {
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around ">
                         <MovieList movies={currentPageData} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col d-flex justify-content-center">
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}

@@ -107,7 +107,7 @@
   padding: 0 15px;
 }
 
-.movie-details{
+.movie-details {
   color: white;
   text-wrap: wrap;
   text-align: left;
@@ -146,6 +146,27 @@
 }
 
 @keyframes donut-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.navbar-link,
+.navbar-link:visited,
+.navbar-link:focus,
+.navbar-link:hover {
+  color: black !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
+}
+
+.dropdown-item-custom:focus,
+.dropdown-item-custom:hover {
+  color: black !important;
+  text-decoration: none !important;
+  background-color: transparent !important;
 }
