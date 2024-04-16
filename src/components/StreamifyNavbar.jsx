@@ -24,7 +24,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                                         className='small-font dropdown-item-custom'
                                         as={Link}
                                         to={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}>
-                                            {movieType}
+                                        {movieType}
                                     </NavDropdown.Item>
                                 ))
                             }
@@ -32,7 +32,15 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                         <NavDropdown title='Genre' id="basic-nav-dropdown" className="align-content-center">
                             {
                                 genres.map((genre, index) => (
-                                    <NavDropdown.Item key={index} eventKey={genre.id} className='small-font' href="#">{genre.name}</NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        key={index}
+                                        eventKey={genre.id}
+                                        className='small-font drop-item-custom'
+                                        as={Link}
+                                        to={`/genre/${genre.id}`}
+                                    >
+                                        {genre.name}
+                                    </NavDropdown.Item>
                                 ))
                             }
                         </NavDropdown>

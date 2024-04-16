@@ -8,6 +8,7 @@ import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
 import MovieTypePage from './components/MovieTypePage';
 import About from './components/About';
+import MovieDisplayByGenre from './components/MovieDisplayByGenre';
 
 export function Spinner() {
   return <div className="spinner"></div>;
@@ -28,6 +29,7 @@ function App() {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const apiKey = '4c0193b45b042c536215774762ee44b5';
 
   // const topRatedScrollContainer = useRef(null);
@@ -243,6 +245,12 @@ function App() {
             />
           ))
         }
+        <Route path='/genre/:genreId' element={
+          <MovieDisplayByGenre
+            movies={movies}
+            genres={genres}
+          />
+        } />
       </Routes>
     </Router >
   )
