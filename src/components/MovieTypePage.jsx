@@ -1,10 +1,8 @@
 import propTypes from 'prop-types'
-import PopularMovies from './PopularMovies'
-import NowPlayingMovies from './NowPlayingMovies'
-import UpcomingMovies from './UpcomingMovies'
-import TopRatedMovies from './TopRatedMovies'
+import MovieList from './MovieList'
+import ReactPaginate from 'react-paginate';
 import { Spinner } from '../App'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 function MovieTypePage({ apiKey, movieType }) {
     const [popularMovies, setPopularMovies] = useState([]);
@@ -14,6 +12,10 @@ function MovieTypePage({ apiKey, movieType }) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const actualMovieType = movieType.replace(/\s/g, '-').toLowerCase();
+
+    const PER_PAGE = 20;
+    const [currentPage, setCurrentPage] = useState(0);
+    const offset = currentPage * PER_PAGE;
 
     useEffect(() => {
         if (actualMovieType === 'popular') {
@@ -96,6 +98,22 @@ function MovieTypePage({ apiKey, movieType }) {
         }
     }, [actualMovieType, apiKey, movieType])
 
+    const moviesToDisplay = useMemo(() => {
+        if (actualMovieType === 'popular') {
+            return popularMovies;
+        }
+        else if (actualMovieType === 'now-playing') {
+            return nowPlayingMovies;
+        }
+        else if (actualMovieType === 'upcoming') {
+            return upcomingMovies;
+        }
+        else if (actualMovieType === 'top-rated') {
+            return topRatedMovies;
+        }
+        return [];
+    }, [actualMovieType, popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies]);
+
     if (isLoading) {
         return <Spinner />
     }
@@ -104,18 +122,44 @@ function MovieTypePage({ apiKey, movieType }) {
         console.log(error)
     }
 
-    switch (actualMovieType) {
-        case 'popular':
-            return <PopularMovies popularMovies={popularMovies} />;
-        case 'now-playing':
-            return <NowPlayingMovies nowPlayingMovies={nowPlayingMovies} />;
-        case 'upcoming':
-            return <UpcomingMovies upcomingMovies={upcomingMovies} />;
-        case 'top-rated':
-            return <TopRatedMovies topRatedMovies={topRatedMovies} />;
-        default:
-            return null; // Return null or some kind of 404 component when the movie type is unknown
-    }
+    const currentPageData = moviesToDisplay
+        .slice(offset, offset + PER_PAGE);
+
+    const pageCount = Math.ceil(moviesToDisplay.length / PER_PAGE);
+
+    return (
+        <div className="container-fluid font-monospace">
+            <div className="row">
+                <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
+                    <h1 className="fw-bold">{movieType}</h1>
+                </div>
+            </div>
+            <div className="container font-monospac">
+                <div className="row">
+                    <div className="col d-flex flex-wrap justify-content-around">
+                        <MovieList movies={currentPageData} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col d-flex justify-content-center">
+                        <ReactPaginate
+                            previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
+                            nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
+                            pageCount={pageCount}
+                            onPageChange={({ selected: selectedPage }) => setCurrentPage(selectedPage)}
+                            containerClassName={"pagination"}
+                            previousLinkClassName={"pagination__link"}
+                            nextLinkClassName={"pagination__link"}
+                            disabledClassName={"pagination__link--disabled"}
+                            activeClassName='bg-success text-white fs-5 fw-bold border-0'
+                            pageClassName='btn btn-outline-success fs-5 fw-bold border-0'
+                            breakClassName='btn btn-outline-success fs-5 fw-bold border-0'
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 MovieTypePage.propTypes = {

@@ -32,8 +32,10 @@ function MovieDisplayByGenre({ movies, genres }) {
                 <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
                     <h1 className="fw-bold">{selectedGenre.name}</h1>
                 </div>
+            </div>
+            <div className="container font-monospace">
                 <div className="row">
-                    <div className="col d-flex flex-wrap justify-content-around ">
+                    <div className="col d-flex flex-wrap justify-content-around">
                         <MovieList movies={currentPageData} />
                     </div>
                 </div>
@@ -56,7 +58,6 @@ function MovieDisplayByGenre({ movies, genres }) {
                 </div>
             </div>
         </div>
-
     );
 }
 

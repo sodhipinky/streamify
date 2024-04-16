@@ -22,7 +22,7 @@ function PaginatedMovies({ movies }) {
                     <p className="fw-bold fs-4">All Movies</p>
                 </div>
                 <div className="row">
-                    <div className="col d-flex flex-wrap justify-content-around ">
+                    <div className="col d-flex flex-wrap justify-content-around">
                         <MovieList movies={currentPageData} />
                     </div>
                 </div>
