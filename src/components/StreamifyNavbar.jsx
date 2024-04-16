@@ -8,7 +8,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
     return (
         <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" className='font-monospace pb-2'>
             <Container fluid>
-                <Navbar.Brand as={Link} to="/">
+                <Navbar.Brand as={Link} to="/home">
                     <img src={Logo} alt={"Streamify"} width={55} className="d-inline-block me-2" />
                     Streamify
                 </Navbar.Brand>

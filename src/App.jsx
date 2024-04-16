@@ -147,6 +147,20 @@ function App() {
             />
             <PaginatedMovies movies={movies} />
           </>
+        }
+        />
+        <Route path='/home' element={
+          <>
+            <TrendingMovies
+              trendingTimePeriod={trendingTimePeriod}
+              setTrendingTimePeriod={setTrendingTimePeriod}
+              trendingMoviesToday={trendingMoviesToday}
+              trendingMoviesThisWeek={trendingMoviesThisWeek}
+              scroll={scroll}
+              trendingScrollContainer={trendingScrollContainer}
+            />
+            <PaginatedMovies movies={movies} />
+          </>
         } />
         <Route path='/movie-details/:movieId' element={<MovieDetails />} />
         <Route path='/about' element={<About />} />
@@ -158,7 +172,7 @@ function App() {
               element={
                 <MovieTypePage
                   apiKey={apiKey}
-                 movieType={movieType}
+                  movieType={movieType}
                 />
               }
             />
