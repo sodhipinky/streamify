@@ -5,15 +5,15 @@ import MovieList from './MovieList';
 
 const PER_PAGE = 20;
 
-function TopRatedMovies({ topRatedMovis }) {
+function TopRatedMovies({ topRatedMovies }) {
     const [currentPage, setCurrentPage] = useState(0);
 
     const offset = currentPage * PER_PAGE;
 
-    const currentPageData = topRatedMovis
+    const currentPageData = topRatedMovies
         .slice(offset, offset + PER_PAGE);
 
-    const pageCount = Math.ceil(topRatedMovis.length / PER_PAGE);
+    const pageCount = Math.ceil(topRatedMovies.length / PER_PAGE);
 
     return (
         <div className="container font-monospace mt-5">
@@ -46,7 +46,7 @@ function TopRatedMovies({ topRatedMovis }) {
 }
 
 TopRatedMovies.propTypes = {
-    topRatedMovis: propTypes.array.isRequired
+    topRatedMovies: propTypes.array.isRequired
 }
 
 export default TopRatedMovies;
