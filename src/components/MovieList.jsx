@@ -15,7 +15,7 @@ function MovieList({ movies }) {
                         <div key={index} className='card movie-card font-monospace border-0 position-relative' onClick={() => navigate(`/movie-details/${movie.id}`)}>
                             <img src={`https://image.tmdb.org/t/p/w1280/${movie.poster_path}`} className='card-img-top rounded-5 shadow' alt={movie.title} />
                             <div className='card-body text-start'>
-                                <p className='card-title fw-bold mb-0'>{movie.title}</p>
+                                <p className='card-title fs-5 fw-bold mb-0'>{movie.title}</p>
                                 <small className='card-text'>{formattedDate}</small>
                             </div>
                             <div className='rating'>
