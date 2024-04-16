@@ -16,10 +16,10 @@ function NowPlayingMovies({ nowPlayingMovies }) {
     const pageCount = Math.ceil(nowPlayingMovies.length / PER_PAGE);
 
     return (
-        <div className="container font-monospace mt-5">
+        <div className="container-fluid font-monospace">
             <div className="row">
-                <div className="col d-flex justify-content-center">
-                    <p className="fw-bold fs-4">Now Playing</p>
+                <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger">
+                    <h1 className="fw-bold">Now Playing</h1>
                 </div>
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around ">
