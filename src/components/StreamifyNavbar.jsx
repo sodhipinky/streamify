@@ -35,7 +35,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
                                     <NavDropdown.Item
                                         key={index}
                                         eventKey={genre.id}
-                                        className='small-font drop-item-custom'
+                                        className='small-font dropdown-item-custom'
                                         as={Link}
                                         to={`/genre/${genre.id}`}
                                     >
