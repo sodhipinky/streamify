@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import About from "./About";
 
 function Header() {
+    const movieTypes = ['Popular', 'Now Playing', 'Upcoming', 'Top Rated'];
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [genres, setGenres] = useState([]);
 
@@ -34,6 +35,7 @@ function Header() {
                 <StreamifyNavbar
                     searchFieldWidth={searchFieldWidth}
                     genres={genres}
+                    movieTypes={movieTypes}
                 />
                 <Routes>
                     <Route path='/about' element={<About />} />

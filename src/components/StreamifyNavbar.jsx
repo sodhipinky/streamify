@@ -3,7 +3,7 @@ import { Container, Nav, Navbar, NavDropdown, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 
-function StreamifyNavbar({ searchFieldWidth, genres }) {
+function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
 
     return (
         <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" className='font-monospace pb-2'>
@@ -17,10 +17,11 @@ function StreamifyNavbar({ searchFieldWidth, genres }) {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/about">About</Nav.Link>
                         <NavDropdown title='Movies' id="basic-nav-dropdown" className="align-content-center">
-                            <NavDropdown.Item className='small-font' href="#">Popular</NavDropdown.Item>
-                            <NavDropdown.Item className='small-font' href="#">Now Playing</NavDropdown.Item>
-                            <NavDropdown.Item className='small-font' href="#">Upcoming</NavDropdown.Item>
-                            <NavDropdown.Item className='small-font' href="#">Top Rated</NavDropdown.Item>
+                            {
+                                movieTypes.map((movieType, index) => (
+                                    <NavDropdown.Item key={index} className='small-font' href="#">{movieType}</NavDropdown.Item>
+                                ))
+                            }
                         </NavDropdown>
                         <NavDropdown title='Genre' id="basic-nav-dropdown" className="align-content-center">
                             {
@@ -46,7 +47,8 @@ function StreamifyNavbar({ searchFieldWidth, genres }) {
 
 StreamifyNavbar.propTypes = {
     searchFieldWidth: propTypes.string.isRequired,
-    genres: propTypes.array.isRequired
+    genres: propTypes.array.isRequired,
+    movieTypes: propTypes.array.isRequired
 }
 
 
