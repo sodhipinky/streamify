@@ -19,7 +19,7 @@ function UpcomingMovies({ upcomingMovies }) {
         <div className="container font-monospace mt-5">
             <div className="row">
                 <div className="col d-flex justify-content-center">
-                    <p className="fw-bold fs-4">Upcoming Movies</p>
+                    <p className="fw-bold fs-4">Upcoming</p>
                 </div>
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around ">
