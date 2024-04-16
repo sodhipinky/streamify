@@ -93,66 +93,72 @@ function App() {
     fetchGenres();
 
     const fetchPopularMovies = async () => {
-      await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          setPopularMovies(data.results)
-          setIsLoading(false)
-        })
-        .catch(error => {
-          console.error(error)
-          setIsLoading(false)
-        });
+      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+      const allPopularMovies = [];
+
+      for (const page of pages) {
+        await fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => allPopularMovies.push(...data.results))
+          .catch(error => setError(error));
+      }
+      setPopularMovies(allPopularMovies)
+      setIsLoading(false)
     }
     fetchPopularMovies();
 
     const fetchNowPlayingMovies = async () => {
-      await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          setNowPlayingMovies(data.results)
-          setIsLoading(false)
-        })
-        .catch(error => {
-          console.error(error)
-          setIsLoading(false)
-        });
+      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+      const allNowPlayingMovies = [];
+
+      for (const page of pages) {
+        await fetch(`https://api.themoviedb.org/3/movie/now_playing?page=${page}&api_key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => allNowPlayingMovies.push(...data.results))
+          .catch(error => setError(error));
+      }
+      setNowPlayingMovies(allNowPlayingMovies)
+      setIsLoading(false)
     }
     fetchNowPlayingMovies();
 
     const fetchUpcomingMovies = async () => {
+      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+      const allUpcomingMovies = [];
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          const upcoming = data.results.filter(movie => {
-            const releaseDate = new Date(movie.release_date);
-            releaseDate.setHours(0, 0, 0, 0);
-            return releaseDate >= today;
+      for (const page of pages) {
+        await fetch(`https://api.themoviedb.org/3/movie/upcoming?page=${page}&api_key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => {
+            const upcomingMovies = data.results.filter(movie => {
+              const releaseDate = new Date(movie.release_date);
+              return releaseDate >= today;
+            });
+            allUpcomingMovies.push(...upcomingMovies);
           })
-          setUpcomingMovies(upcoming)
-          setIsLoading(false)
-        })
-        .catch(error => {
-          console.error(error)
-          setIsLoading(false)
-        });
+          .catch(error => setError(error));
+      }
+      allUpcomingMovies.sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+      setUpcomingMovies(allUpcomingMovies)
+      setIsLoading(false)
     }
     fetchUpcomingMovies();
 
     const fetchTopRatedMovies = async () => {
-      await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          setTopRatedMovies(data.results)
-          setIsLoading(false)
-        })
-        .catch(error => {
-          console.error(error)
-          setIsLoading(false)
-        });
+      const pages = Array.from({ length: 10 }, (_, i) => i + 1);
+      const allTopRatedMovies = [];
+
+      for (const page of pages) {
+        await fetch(`https://api.themoviedb.org/3/movie/top_rated?page=${page}&api_key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => allTopRatedMovies.push(...data.results))
+          .catch(error => setError(error));
+      }
+      allTopRatedMovies.sort((a, b) => b.vote_average - a.vote_average)
+      setTopRatedMovies(allTopRatedMovies)
+      setIsLoading(false)
     }
     fetchTopRatedMovies();
   });
