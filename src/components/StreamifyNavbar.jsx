@@ -23,6 +23,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
                 .then(response => response.json())
                 .then(data => {
                     navigate('/search-results', { state: { searchedMovies: data.results } });
+                    setSearchTerm('');
                 })
                 .catch(error => console.log(error));
         }
