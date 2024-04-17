@@ -5,9 +5,9 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 function Footer() {
     return (
         <>
-            <div className="container-fluid bg-dark text-light p-3 mt-2 font-monospace">
+            <div className="container-fluid bg-dark text-light mt-2 font-monospace">
                 <div className="row">
-                    <div className="col-md-6 ms-2">
+                    <div className="col-md-6 ps-3 mt-3 ms-2">
                         <h5>Contact:</h5>
                         <p className="fs-5">
                             <a href="mailto:pinky.sodhi@gmail.com" className="text-white">
@@ -24,7 +24,7 @@ function Footer() {
                 </div>
                 <div className="row">
                     <div className="col text-center">
-                        <p>&copy; {new Date().getFullYear()} Streamify. All rights reserved.</p>
+                        <p className="mb-2">&copy; {new Date().getFullYear()} Streamify. All rights reserved.</p>
                     </div>
                 </div>
             </div>

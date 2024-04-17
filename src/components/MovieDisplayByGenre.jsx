@@ -9,6 +9,7 @@ const PER_PAGE = 20;
 function MovieDisplayByGenre({ movies, genres }) {
     const { genreId } = useParams();
     const selectedGenre = genres.find(genre => genre.id === parseInt(genreId));
+    const [currentPage, setCurrentPage] = useState(0);
 
     const filteredMovies = useMemo(() => {
         if (!selectedGenre) {
@@ -17,7 +18,18 @@ function MovieDisplayByGenre({ movies, genres }) {
         return movies.filter(movie => movie.genre_ids.includes(selectedGenre.id));
     }, [movies, selectedGenre]);
 
-    const [currentPage, setCurrentPage] = useState(0);
+    if (filteredMovies.length === 0) {
+        return (
+            <div className="container-fluid font-monospace">
+                <div className="row">
+                    <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
+                        <h1 className="fw-bold">No movies found</h1>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
 
     const offset = currentPage * PER_PAGE;
 

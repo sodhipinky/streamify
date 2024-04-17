@@ -131,65 +131,67 @@ function App() {
 
   return (
     <Router>
-      <Header
-        movieTypes={movieTypes}
-        genres={genres}
-        isLoading={isLoading}
-        apiKey={apiKey}
-      />
-      <Routes>
-        <Route path='/search-results' element={<SearchResults />} />
-        <Route path='/' element={
-          <>
-            <TrendingMovies
-              trendingTimePeriod={trendingTimePeriod}
-              setTrendingTimePeriod={setTrendingTimePeriod}
-              trendingMoviesToday={trendingMoviesToday}
-              trendingMoviesThisWeek={trendingMoviesThisWeek}
-              scroll={scroll}
-              trendingScrollContainer={trendingScrollContainer}
-            />
-            <PaginatedMovies movies={movies} />
-          </>
-        }
+      <div className="app">
+        <Header
+          movieTypes={movieTypes}
+          genres={genres}
+          isLoading={isLoading}
+          apiKey={apiKey}
         />
-        <Route path='/home' element={
-          <>
-            <TrendingMovies
-              trendingTimePeriod={trendingTimePeriod}
-              setTrendingTimePeriod={setTrendingTimePeriod}
-              trendingMoviesToday={trendingMoviesToday}
-              trendingMoviesThisWeek={trendingMoviesThisWeek}
-              scroll={scroll}
-              trendingScrollContainer={trendingScrollContainer}
-            />
-            <PaginatedMovies movies={movies} />
-          </>
-        } />
-        <Route path='/movie-details/:movieId' element={<MovieDetails />} />
-        <Route path='/about' element={<About />} />
-        {
-          movieTypes.map((movieType, index) => (
-            <Route
-              key={index}
-              path={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}
-              element={
-                <MovieTypePage
-                  apiKey={apiKey}
-                  movieType={movieType}
-                />
-              }
-            />
-          ))
-        }
-        <Route path='/genre/:genreId' element={
-          <MovieDisplayByGenre
-            movies={movies}
-            genres={genres}
+        <Routes>
+          <Route path='/search-results' element={<SearchResults />} />
+          <Route path='/' element={
+            <>
+              <TrendingMovies
+                trendingTimePeriod={trendingTimePeriod}
+                setTrendingTimePeriod={setTrendingTimePeriod}
+                trendingMoviesToday={trendingMoviesToday}
+                trendingMoviesThisWeek={trendingMoviesThisWeek}
+                scroll={scroll}
+                trendingScrollContainer={trendingScrollContainer}
+              />
+              <PaginatedMovies movies={movies} />
+            </>
+          }
           />
-        } />
-      </Routes>
-      <Footer />
+          <Route path='/home' element={
+            <>
+              <TrendingMovies
+                trendingTimePeriod={trendingTimePeriod}
+                setTrendingTimePeriod={setTrendingTimePeriod}
+                trendingMoviesToday={trendingMoviesToday}
+                trendingMoviesThisWeek={trendingMoviesThisWeek}
+                scroll={scroll}
+                trendingScrollContainer={trendingScrollContainer}
+              />
+              <PaginatedMovies movies={movies} />
+            </>
+          } />
+          <Route path='/movie-details/:movieId' element={<MovieDetails />} />
+          <Route path='/about' element={<About />} />
+          {
+            movieTypes.map((movieType, index) => (
+              <Route
+                key={index}
+                path={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}
+                element={
+                  <MovieTypePage
+                    apiKey={apiKey}
+                    movieType={movieType}
+                  />
+                }
+              />
+            ))
+          }
+          <Route path='/genre/:genreId' element={
+            <MovieDisplayByGenre
+              movies={movies}
+              genres={genres}
+            />
+          } />
+        </Routes>
+        <Footer />
+      </div>
     </Router >
   )
 }
