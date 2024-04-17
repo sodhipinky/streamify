@@ -10,9 +10,6 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
-    //remove documentary genre from genres
-    // const genresToDisplay = genres.filter(genre => genre.name !== 'Documentary')
-
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     }

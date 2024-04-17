@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import MovieList from './MovieList'
 import ReactPaginate from 'react-paginate';
 import { Spinner } from '../App'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 
 function MovieTypePage({ apiKey, movieType }) {
     const [popularMovies, setPopularMovies] = useState([]);
@@ -12,120 +12,106 @@ function MovieTypePage({ apiKey, movieType }) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const actualMovieType = movieType.replace(/\s/g, '-').toLowerCase();
-
-    const PER_PAGE = 20;
     const [currentPage, setCurrentPage] = useState(0);
-    const offset = currentPage * PER_PAGE;
+    const pageCount = 10;
 
     useEffect(() => {
-        if (actualMovieType === 'popular') {
-            const fetchPopularMovies = async () => {
-                const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-                const allPopularMovies = [];
+        fetchMovies();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, actualMovieType]);
 
-                for (const page of pages) {
-                    await fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${apiKey}`)
-                        .then(response => response.json())
-                        .then(data => allPopularMovies.push(...data.results))
-                        .catch(error => setError(error));
-                }
-                setPopularMovies(allPopularMovies)
+    const fetchMovies = async () => {
+        let url = '';
+        switch (actualMovieType) {
+            case 'popular':
+                url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage + 1}`;
+                break;
+            case 'now-playing':
+                url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&page=${currentPage + 1}`;
+                break;
+            case 'upcoming':
+                url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=${currentPage + 1}`;
+                break;
+            case 'top-rated':
+                url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&page=${currentPage + 1}`;
+                break;
+            default:
+                setError('Invalid movie type');
                 setIsLoading(false);
-            }
-            fetchPopularMovies();
+                return;
         }
-        else if (actualMovieType === 'now-playing') {
-            const fetchNowPlayingMovies = async () => {
-                const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-                const allNowPlayingMovies = [];
 
-                for (const page of pages) {
-                    await fetch(`https://api.themoviedb.org/3/movie/now_playing?page=${page}&api_key=${apiKey}`)
-                        .then(response => response.json())
-                        .then(data => allNowPlayingMovies.push(...data.results))
-                        .catch(error => setError(error));
+        await fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                switch (actualMovieType) {
+                    case 'popular':
+                        setPopularMovies(data.results);
+                        break;
+                    case 'now-playing':
+                        setNowPlayingMovies(data.results);
+                        break;
+                    case 'upcoming':
+                        setUpcomingMovies(data.results);
+                        break;
+                    case 'top-rated':
+                        setTopRatedMovies(data.results);
+                        break;
+                    default:
+                        setError('Invalid movie type');
+                        setIsLoading(false);
+                        return;
                 }
-                setNowPlayingMovies(allNowPlayingMovies)
                 setIsLoading(false);
-            }
-            fetchNowPlayingMovies();
-        }
-        else if (actualMovieType === 'upcoming') {
-            const fetchUpcomingMovies = async () => {
-                const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-                const allUpcomingMovies = [];
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                for (const page of pages) {
-                    await fetch(`https://api.themoviedb.org/3/movie/upcoming?page=${page}&api_key=${apiKey}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const upcomingMovies = data.results.filter(movie => {
-                                const releaseDate = new Date(movie.release_date);
-                                return releaseDate >= today;
-                            });
-                            allUpcomingMovies.push(...upcomingMovies);
-                        })
-                        .catch(error => setError(error));
-                }
-                allUpcomingMovies.sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
-                setUpcomingMovies(allUpcomingMovies)
+            })
+            .catch(error => {
+                setError(error);
                 setIsLoading(false);
-            }
-            fetchUpcomingMovies();
-        }
-        else if (actualMovieType === 'top-rated') {
-            const fetchTopRatedMovies = async () => {
-                const pages = Array.from({ length: 10 }, (_, i) => i + 1);
-                const allTopRatedMovies = [];
-
-                for (const page of pages) {
-                    await fetch(`https://api.themoviedb.org/3/movie/top_rated?page=${page}&api_key=${apiKey}`)
-                        .then(response => response.json())
-                        .then(data => allTopRatedMovies.push(...data.results))
-                        .catch(error => setError(error));
-                }
-                allTopRatedMovies.sort((a, b) => b.vote_average - a.vote_average)
-                setTopRatedMovies(allTopRatedMovies)
-                setIsLoading(false);
-            }
-            fetchTopRatedMovies();
-        }
-        else {
-            setError(`Unknown movie type: ${movieType}`);
-            setIsLoading(false);
-        }
-    }, [actualMovieType, apiKey, movieType])
-
-    const moviesToDisplay = useMemo(() => {
-        if (actualMovieType === 'popular') {
-            return popularMovies;
-        }
-        else if (actualMovieType === 'now-playing') {
-            return nowPlayingMovies;
-        }
-        else if (actualMovieType === 'upcoming') {
-            return upcomingMovies;
-        }
-        else if (actualMovieType === 'top-rated') {
-            return topRatedMovies;
-        }
-        return [];
-    }, [actualMovieType, popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies]);
+            });
+    };
 
     if (isLoading) {
-        return <Spinner />
+        return (
+            <div className='container-fluid'>
+                <div className='row'>
+                    <div className='col d-flex justify-content-center'>
+                        <Spinner />
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     if (error) {
-        console.log(error)
+        return (
+            <div className='container-fluid'>
+                <div className='row'>
+                    <div className='col d-flex justify-content-center'>
+                        <h1>Error: {error.message}</h1>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
-    const currentPageData = moviesToDisplay
-        .slice(offset, offset + PER_PAGE);
-
-    const pageCount = Math.ceil(moviesToDisplay.length / PER_PAGE);
+    let currentPageData = [];
+    switch (actualMovieType) {
+        case 'popular':
+            currentPageData = popularMovies;
+            break;
+        case 'now-playing':
+            currentPageData = nowPlayingMovies;
+            break;
+        case 'upcoming':
+            currentPageData = upcomingMovies;
+            break;
+        case 'top-rated':
+            currentPageData = topRatedMovies;
+            break;
+        default:
+            setError('Invalid movie type');
+            return;
+    }
 
     return (
         <div className="container-fluid font-monospace">
