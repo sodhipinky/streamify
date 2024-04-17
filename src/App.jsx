@@ -20,7 +20,6 @@ function App() {
 
   const movieTypes = ['Popular', 'Now Playing', 'Upcoming', 'Top Rated'];
 
-  const [movies, setMovies] = useState([]);
   const [trendingMoviesThisWeek, setTrendingMoviesThisWeek] = useState([]);
   const [trendingMoviesToday, setTrendingMoviesToday] = useState([]);
   const [trendingTimePeriod, setTrendingTimePeriod] = useState('day');
@@ -41,25 +40,6 @@ function App() {
       });
     }
   }
-
-  useEffect(() => {
-    setIsLoading(true); // sets the isLoading state to true
-    const fetchPages = async () => {
-      const pages = Array.from({ length: 20 }, (_, i) => i + 1); // creates an array [1, 2, ..., 10]
-      const allMovies = [];
-
-      for (const page of pages) { // fetches movies from pages 1 to 10
-        await fetch(`https://api.themoviedb.org/3/discover/movie?page=${page}&api_key=${apiKey}`)
-          .then(response => response.json())
-          .then(pageData => allMovies.push(...pageData.results))
-          .catch(error => setError(error));
-      }
-      setMovies(allMovies); // sets the movies state to allMovies
-      setIsLoading(false); // sets the isLoading state to false
-    };
-    fetchPages(); // calls the fetchPages function
-  }, []);
-
 
   useEffect(() => {
     const fetchTrendingMoviesThisWeek = async () => {
@@ -91,7 +71,7 @@ function App() {
         });
     }
     fetchGenres();
-  });
+  }, []);
 
   if (isLoading) {
     return (
@@ -117,7 +97,7 @@ function App() {
     )
   }
 
-  if (!movies.length) {
+  if (!trendingMoviesThisWeek.length || !trendingMoviesToday.length) {
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -150,7 +130,7 @@ function App() {
                 scroll={scroll}
                 trendingScrollContainer={trendingScrollContainer}
               />
-              <PaginatedMovies movies={movies} />
+              <PaginatedMovies apiKey={apiKey} />
             </>
           }
           />
@@ -164,7 +144,7 @@ function App() {
                 scroll={scroll}
                 trendingScrollContainer={trendingScrollContainer}
               />
-              <PaginatedMovies movies={movies} />
+              <PaginatedMovies apiKey={apiKey} />
             </>
           } />
           <Route path='/movie-details/:movieId' element={<MovieDetails />} />
@@ -185,7 +165,6 @@ function App() {
           }
           <Route path='/genre/:genreId' element={
             <MovieDisplayByGenre
-              movies={movies}
               genres={genres}
             />
           } />

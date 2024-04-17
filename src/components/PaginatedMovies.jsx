@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import propTypes from 'prop-types'
 import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
 
-const PER_PAGE = 20;
-
-function PaginatedMovies({ movies }) {
+function PaginatedMovies({ apiKey }) {
     const [currentPage, setCurrentPage] = useState(0);
+    const [movies, setMovies] = useState([]);
+    const pageCount = 10;
 
-    const offset = currentPage * PER_PAGE;
+    useEffect(() => {
+        fetchMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage]);
 
-    const currentPageData = movies
-        .slice(offset, offset + PER_PAGE);
-
-    const pageCount = Math.ceil(movies.length / PER_PAGE);
+    const fetchMovies = async () => {
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${currentPage + 1}&api_key=${apiKey}`);
+        const data = await response.json();
+        setMovies(data.results);
+    };
 
     return (
         <div className="container font-monospace mt-5">
@@ -23,7 +27,7 @@ function PaginatedMovies({ movies }) {
                 </div>
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around">
-                        <MovieList movies={currentPageData} />
+                        <MovieList movies={movies} />
                     </div>
                 </div>
                 <div className="row">
@@ -50,7 +54,7 @@ function PaginatedMovies({ movies }) {
 }
 
 PaginatedMovies.propTypes = {
-    movies: propTypes.array.isRequired
+    apiKey: propTypes.string.isRequired
 }
 
 export default PaginatedMovies;
