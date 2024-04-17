@@ -10,7 +10,7 @@ function SearchResults() {
                 <div className="container-fluid font-monospace ">
                     <div className="row">
                         <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
-                            <h2 className="fw-bold">Search Results</h2>
+                            <h1 className="fw-bold">Search Results</h1>
                         </div>
                     </div>
                 </div>

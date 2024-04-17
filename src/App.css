@@ -122,8 +122,6 @@
   width: 60px;
   height: 60px;
   position: relative;
-  /* top: 15px;
-  left: 30px; */
   background-color: black;
   border-radius: 50%;
   color: white;
@@ -171,4 +169,15 @@
   color: black !important;
   text-decoration: none !important;
   background-color: transparent !important;
+}
+
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+body {
+  padding-top: 70px;
 }
