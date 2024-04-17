@@ -10,6 +10,7 @@ import MovieTypePage from './components/MovieTypePage';
 import About from './components/About';
 import MovieDisplayByGenre from './components/MovieDisplayByGenre';
 import SearchResults from './components/SearchResults';
+import Footer from './components/Footer';
 
 export function Spinner() {
   return <div className="spinner"></div>;
@@ -188,6 +189,7 @@ function App() {
           />
         } />
       </Routes>
+      <Footer />
     </Router >
   )
 }
