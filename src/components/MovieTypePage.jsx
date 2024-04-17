@@ -20,54 +20,32 @@ function MovieTypePage({ apiKey, movieType }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, actualMovieType]);
 
-    const fetchMovies = async () => {
-        let url = '';
-        switch (actualMovieType) {
-            case 'popular':
-                url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage + 1}`;
-                break;
-            case 'now-playing':
-                url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&page=${currentPage + 1}`;
-                break;
-            case 'upcoming':
-                url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=${currentPage + 1}`;
-                break;
-            case 'top-rated':
-                url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&page=${currentPage + 1}`;
-                break;
-            default:
-                setError('Invalid movie type');
-                setIsLoading(false);
-                return;
-        }
+    const movieTypeToSetter = {
+        'popular': setPopularMovies,
+        'now-playing': setNowPlayingMovies,
+        'upcoming': setUpcomingMovies,
+        'top-rated': setTopRatedMovies,
+    };
 
-        await fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                switch (actualMovieType) {
-                    case 'popular':
-                        setPopularMovies(data.results);
-                        break;
-                    case 'now-playing':
-                        setNowPlayingMovies(data.results);
-                        break;
-                    case 'upcoming':
-                        setUpcomingMovies(data.results);
-                        break;
-                    case 'top-rated':
-                        setTopRatedMovies(data.results);
-                        break;
-                    default:
-                        setError('Invalid movie type');
-                        setIsLoading(false);
-                        return;
-                }
-                setIsLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setIsLoading(false);
-            });
+    const fetchMovies = async () => {
+        const movieTypeToSearch = actualMovieType.replace(/-/g, '_');
+        const url = `https://api.themoviedb.org/3/movie/${movieTypeToSearch}?api_key=${apiKey}&page=${currentPage + 1}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const results = data.results;
+
+            const setMovies = movieTypeToSetter[actualMovieType];
+            if (!setMovies) {
+                throw new Error('Invalid movie type');
+            }
+
+            setMovies(results);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            setIsLoading(false);
+        }
     };
 
     if (isLoading) {
@@ -126,7 +104,7 @@ function MovieTypePage({ apiKey, movieType }) {
                         <MovieList movies={currentPageData} />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}

@@ -57,7 +57,7 @@ function MovieDisplayByGenre({ genres, apiKey }) {
                         <MovieList movies={movies} />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row mt-3">
                     <div className="col d-flex justify-content-center">
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
