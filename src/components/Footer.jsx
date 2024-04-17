@@ -5,7 +5,7 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 function Footer() {
     return (
         <>
-            <div className="container-fluid bg-dark text-light p-3 mt-2 font-monospace sticky-bottom">
+            <div className="container-fluid bg-dark text-light p-3 mt-2 font-monospace">
                 <div className="row">
                     <div className="col-md-6 ms-2">
                         <h5>Contact:</h5>
