@@ -1,24 +1,32 @@
-import { useMemo, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import propTypes from 'prop-types'
 import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
 
-const PER_PAGE = 20;
-
-function MovieDisplayByGenre({ movies, genres }) {
+function MovieDisplayByGenre({ genres, apiKey }) {
     const { genreId } = useParams();
     const selectedGenre = genres.find(genre => genre.id === parseInt(genreId));
     const [currentPage, setCurrentPage] = useState(0);
+    const [movies, setMovies] = useState([]);
+    const pageCount = 10;
 
-    const filteredMovies = useMemo(() => {
+    useEffect(() => {
+        fetchMoviesByGenre();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedGenre, currentPage]);
+
+    const fetchMoviesByGenre = async () => {
         if (!selectedGenre) {
-            return movies;
+            return;
         }
-        return movies.filter(movie => movie.genre_ids.includes(selectedGenre.id));
-    }, [movies, selectedGenre]);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${selectedGenre.id}&page=${currentPage + 1}`);
+        const data = await response.json();
+        setMovies(data.results);
+    };
 
-    if (filteredMovies.length === 0) {
+
+    if (movies.length === 0) {
         return (
             <div className="container-fluid font-monospace">
                 <div className="row">
@@ -36,13 +44,6 @@ function MovieDisplayByGenre({ movies, genres }) {
     }
 
 
-    const offset = currentPage * PER_PAGE;
-
-    const currentPageData = filteredMovies
-        .slice(offset, offset + PER_PAGE);
-
-    const pageCount = Math.ceil(filteredMovies.length / PER_PAGE);
-
     return (
         <div className="container-fluid font-monospace">
             <div className="row">
@@ -53,7 +54,7 @@ function MovieDisplayByGenre({ movies, genres }) {
             <div className="container font-monospace">
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around">
-                        <MovieList movies={currentPageData} />
+                        <MovieList movies={movies} />
                     </div>
                 </div>
                 <div className="row">
@@ -79,8 +80,8 @@ function MovieDisplayByGenre({ movies, genres }) {
 }
 
 MovieDisplayByGenre.propTypes = {
-    movies: propTypes.array.isRequired,
-    genres: propTypes.array.isRequired
+    genres: propTypes.array.isRequired,
+    apiKey: propTypes.string.isRequired
 }
 
 export default MovieDisplayByGenre;

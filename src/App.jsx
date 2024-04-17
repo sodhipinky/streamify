@@ -166,6 +166,7 @@ function App() {
           <Route path='/genre/:genreId' element={
             <MovieDisplayByGenre
               genres={genres}
+              apiKey={apiKey}
             />
           } />
         </Routes>
