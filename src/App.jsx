@@ -63,7 +63,7 @@ function App() {
 
   useEffect(() => {
     const fetchTrendingMoviesThisWeek = async () => {
-      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`)
+      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}&page=1`)
         .then(response => response.json())
         .then(data => setTrendingMoviesThisWeek(data.results))
         .catch(error => setError(error));
@@ -71,7 +71,7 @@ function App() {
     fetchTrendingMoviesThisWeek();
 
     const fetchTrendingMoviesToday = async () => {
-      await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
+      await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=1`)
         .then(response => response.json())
         .then(data => setTrendingMoviesToday(data.results))
         .catch(error => setError(error));
