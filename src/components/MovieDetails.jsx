@@ -80,9 +80,15 @@ function MovieDetails() {
     const director = movieCredits?.crew.find(member => member.job === 'Director');
     const producer = movieCredits?.crew.find(member => member.job === 'Producer');
     const date = new Date(movie.release_date);
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    let formattedDate = 'N/A';
+    let year = 'N/A';
     const hours = Math.floor(movie.runtime / 60);
     const minutes = movie.runtime % 60;
+
+    if (!isNaN(date.getTime())) {
+        formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        year = date.getFullYear();
+    }
 
 
     return (
@@ -97,7 +103,7 @@ function MovieDetails() {
                     <div className="movie-banner" style={{ backgroundImage: `url(${imageUrl})` }}>
                         <div className="movie-banner-overlay card border-0 rounded-0 m-0">
                             <div className="movie-details card-body p-0">
-                                <h1 className="card-title movie-title fw-bold mt-0">{movie.title}({new Date(movie.release_date).getFullYear()})</h1>
+                                <h1 className="card-title movie-title fw-bold mt-0">{movie.title}({year})</h1>
                                 <div className="d-flex align-items-center">
                                     <p>
                                         {certification} | {formattedDate} (US) | {hours}h {minutes}m | {movie.genres.map(genre => genre.name).join(', ')}
