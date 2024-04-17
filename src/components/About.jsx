@@ -31,15 +31,6 @@ function About() {
                         By the way, you can also find the code of this project on <a href="https://github.com/sodhipinky/streamify"><strong>GitHub</strong></a>.
                         {/* TODO: Put a link of GitHub Pages when the website is deployed */}
                     </p>
-                    <hr />
-                    <h3 className="fw-bold text-danger">Contact Me</h3>
-                    <p className="fs-6 border-bottom-0 pb-3">
-                        If you find the project interesting (or boring), you can reach out to me at <a href="mailto:pinky.sodhi@gmail.com">my email</a> or connect with me on <a href="https://www.linkedin.com/in/pinkysodhi/">LinkedIn</a>.
-                    </p>
-                    <hr />
-                    <p>
-                        <a href="https://www.linkedin.com/in/pinkysodhi/"><strong>@pinkysodhi</strong></a>
-                    </p>
                 </div>
             </div>
         </>
