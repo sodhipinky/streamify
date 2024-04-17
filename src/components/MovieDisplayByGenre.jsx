@@ -23,7 +23,12 @@ function MovieDisplayByGenre({ movies, genres }) {
             <div className="container-fluid font-monospace">
                 <div className="row">
                     <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
-                        <h1 className="fw-bold">No movies found</h1>
+                        <h1 className="fw-bold">{selectedGenre.name}</h1>
+                    </div>
+                    <div className="row">
+                        <div className="col d-flex justify-content-center p-3">
+                            <h2>Oops! No movies here yet...</h2>
+                        </div>
                     </div>
                 </div>
             </div>
