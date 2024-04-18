@@ -153,7 +153,7 @@ function App() {
             movieTypes.map((movieType, index) => (
               <Route
                 key={index}
-                path={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}
+                path={`/${movieType.replace(/\s/g, '_').toLowerCase()}`}
                 element={
                   <MovieTypePage
                     apiKey={apiKey}

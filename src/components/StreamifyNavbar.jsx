@@ -49,7 +49,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
                                             key={index}
                                             className='small-font dropdown-item-custom'
                                             as={Link}
-                                            to={`/${movieType.replace(/\s/g, '-').toLowerCase()}`}>
+                                            to={`/${movieType.replace(/\s/g, '_').toLowerCase()}`}>
                                             {movieType}
                                         </NavDropdown.Item>
                                     ))

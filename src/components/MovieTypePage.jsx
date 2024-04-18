@@ -11,7 +11,7 @@ function MovieTypePage({ apiKey, movieType }) {
     const [topRatedMovies, setTopRatedMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const actualMovieType = movieType.replace(/\s/g, '-').toLowerCase();
+    const actualMovieType = movieType.replace(/\s/g, '_').toLowerCase();
     const [currentPage, setCurrentPage] = useState(0);
     const pageCount = 10;
 
@@ -22,14 +22,13 @@ function MovieTypePage({ apiKey, movieType }) {
 
     const movieTypeToSetter = {
         'popular': setPopularMovies,
-        'now-playing': setNowPlayingMovies,
+        'now_playing': setNowPlayingMovies,
         'upcoming': setUpcomingMovies,
-        'top-rated': setTopRatedMovies,
+        'top_rated': setTopRatedMovies,
     };
 
     const fetchMovies = async () => {
-        const movieTypeToSearch = actualMovieType.replace(/-/g, '_');
-        const url = `https://api.themoviedb.org/3/movie/${movieTypeToSearch}?api_key=${apiKey}&page=${currentPage + 1}`;
+        const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -77,13 +76,13 @@ function MovieTypePage({ apiKey, movieType }) {
         case 'popular':
             currentPageData = popularMovies;
             break;
-        case 'now-playing':
+        case 'now_playing':
             currentPageData = nowPlayingMovies;
             break;
         case 'upcoming':
             currentPageData = upcomingMovies;
             break;
-        case 'top-rated':
+        case 'top_rated':
             currentPageData = topRatedMovies;
             break;
         default:
