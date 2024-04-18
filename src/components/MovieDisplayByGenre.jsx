@@ -26,7 +26,7 @@ function MovieDisplayByGenre({ genres, apiKey }) {
         if (!selectedGenre) {
             return;
         }
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${currentPage + 1}`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${currentPage + 1}&adult=false`);
         const data = await response.json();
         setMovies(data.results);
     };
@@ -61,7 +61,6 @@ function MovieDisplayByGenre({ genres, apiKey }) {
                 </div>
                 <div className="container font-monospace">
                     <div className="row">
-
                         <div className="col d-flex flex-wrap justify-content-around">
                             <MovieList movies={movies} />
                         </div>

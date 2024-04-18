@@ -4,11 +4,11 @@ import ReactPaginate from 'react-paginate';
 import Sticky from 'react-stickynode';
 import { Spinner } from '../App'
 import { useState, useEffect } from 'react'
+import UpcomingMovies from './UpcomingMovies';
 
 function MovieTypePage({ apiKey, movieType }) {
     const [popularMovies, setPopularMovies] = useState([]);
     const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
-    const [upcomingMovies, setUpcomingMovies] = useState([]);
     const [topRatedMovies, setTopRatedMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ function MovieTypePage({ apiKey, movieType }) {
     useEffect(() => {
         setCurrentPage(0);
     }, [actualMovieType]);
-    
+
     useEffect(() => {
         fetchMovies();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,29 +28,37 @@ function MovieTypePage({ apiKey, movieType }) {
     const movieTypeToSetter = {
         'popular': setPopularMovies,
         'now_playing': setNowPlayingMovies,
-        'upcoming': setUpcomingMovies,
         'top_rated': setTopRatedMovies,
     };
 
     const fetchMovies = async () => {
-        const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}&adult=false`;
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            const results = data.results;
+        if (actualMovieType === 'upcoming') {
+            return;
+        }
+        else {
+            const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}&adult=false`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const results = data.results;
 
-            const setMovies = movieTypeToSetter[actualMovieType];
-            if (!setMovies) {
-                throw new Error('Invalid movie type');
+                const setMovies = movieTypeToSetter[actualMovieType];
+                if (!setMovies) {
+                    throw new Error('Invalid movie type');
+                }
+
+                setMovies(results);
+                setIsLoading(false);
+            } catch (error) {
+                setError(error);
+                setIsLoading(false);
             }
-
-            setMovies(results);
-            setIsLoading(false);
-        } catch (error) {
-            setError(error);
-            setIsLoading(false);
         }
     };
+
+    if (actualMovieType === 'upcoming') {
+        return <UpcomingMovies apiKey={apiKey} />
+    }
 
     if (isLoading) {
         return (
@@ -83,9 +91,6 @@ function MovieTypePage({ apiKey, movieType }) {
             break;
         case 'now_playing':
             currentPageData = nowPlayingMovies;
-            break;
-        case 'upcoming':
-            currentPageData = upcomingMovies;
             break;
         case 'top_rated':
             currentPageData = topRatedMovies;
