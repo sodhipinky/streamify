@@ -84,6 +84,8 @@ function MovieDetails() {
     let year = 'N/A';
     const hours = Math.floor(movie.runtime / 60);
     const minutes = movie.runtime % 60;
+    const budget = movie ? movie.budget : 'Loading...';
+    const revenue = movie ? movie.revenue : 'Loading...';
 
     if (!isNaN(date.getTime())) {
         formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -146,13 +148,13 @@ function MovieDetails() {
                                 <div className="row mt-3">
                                     <div className="col">
                                         <p className="card-text fs-5 mb-0">
-                                            {movieDetails.budget ? `$${movieDetails.budget}` : 'Unknown'}
+                                            {budget ? `$${budget}` : 'Unknown'}
                                         </p>
                                         <p className='card-text fs-5 fw-bold mb-0'>Budget </p>
                                     </div>
                                     <div className="col">
                                         <p className="card-text fs-5 mb-0">
-                                            {movieDetails.revenue ? `$${movieDetails.revenue}` : 'Unknown'}
+                                            {revenue ? `$${revenue}` : 'Unknown'}
                                         </p>
                                         <p className='card-text fs-5 fw-bold mb-0'>Revenue </p>
                                     </div>
