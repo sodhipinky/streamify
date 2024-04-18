@@ -17,6 +17,10 @@ function MovieTypePage({ apiKey, movieType }) {
     const pageCount = 10;
 
     useEffect(() => {
+        setCurrentPage(0);
+    }, [actualMovieType]);
+    
+    useEffect(() => {
         fetchMovies();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, actualMovieType]);
@@ -29,7 +33,7 @@ function MovieTypePage({ apiKey, movieType }) {
     };
 
     const fetchMovies = async () => {
-        const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}`;
+        const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}&adult=false`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -113,6 +117,7 @@ function MovieTypePage({ apiKey, movieType }) {
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
                             pageCount={pageCount}
                             onPageChange={({ selected: selectedPage }) => setCurrentPage(selectedPage)}
+                            forcePage={currentPage}
                             containerClassName={"pagination"}
                             previousLinkClassName={"pagination__link"}
                             nextLinkClassName={"pagination__link"}
