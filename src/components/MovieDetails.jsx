@@ -8,7 +8,7 @@ function MovieDetails() {
     const [movie, setMovie] = useState(null);
     const [movieCredits, setMovieCredits] = useState(null);
     const [certification, setCertification] = useState('Not Rated');
-    const [movieDetails, setMovieDetails] = useState(null);
+    const [setMovieDetails] = useState(null);
     const [, setIsLoading] = useState(false);
 
     useEffect(() => {
