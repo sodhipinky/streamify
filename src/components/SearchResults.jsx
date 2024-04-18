@@ -1,11 +1,12 @@
 import { useLocation } from "react-router-dom";
 import MovieList from "./MovieList";
+import Sticky from "react-stickynode";
 
 function SearchResults() {
     const location = useLocation();
     const searchedMovies = location.state.searchedMovies;
 
-    if(searchedMovies.length === 0) {
+    if (searchedMovies.length === 0) {
         return (
             <div className="container-fluid font-monospace">
                 <div className="row">
@@ -27,9 +28,11 @@ function SearchResults() {
             <>
                 <div className="container-fluid font-monospace ">
                     <div className="row">
-                        <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
-                            <h1 className="fw-bold">Search Results</h1>
-                        </div>
+                        <Sticky top={81} innerZ={500} activeClass='sticky-active' className='p-0 mb-3'>
+                            <div className="col d-flex justify-content-center p-3 text-light bg-danger ">
+                                <h1 className="fw-bold">Search Results</h1>
+                            </div>
+                        </Sticky>
                     </div>
                 </div>
                 <div className='container font-monospace '>

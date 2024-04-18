@@ -1,6 +1,7 @@
 import propTypes from 'prop-types'
 import MovieList from './MovieList'
 import ReactPaginate from 'react-paginate';
+import Sticky from 'react-stickynode';
 import { Spinner } from '../App'
 import { useState, useEffect } from 'react'
 
@@ -93,9 +94,11 @@ function MovieTypePage({ apiKey, movieType }) {
     return (
         <div className="container-fluid font-monospace">
             <div className="row">
-                <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
-                    <h1 className="fw-bold">{movieType}</h1>
-                </div>
+                <Sticky top={81} innerZ={500} activeClass='sticky-active' className='p-0 mb-3'>
+                    <div className="col d-flex justify-content-center p-3 text-light bg-danger ">
+                        <h1 className="fw-bold">{movieType}</h1>
+                    </div>
+                </Sticky>
             </div>
             <div className="container font-monospac">
                 <div className="row">
