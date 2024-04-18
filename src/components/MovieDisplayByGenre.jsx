@@ -12,15 +12,20 @@ function MovieDisplayByGenre({ genres, apiKey }) {
     const pageCount = 10;
 
     useEffect(() => {
+        setCurrentPage(0);
+    }, [genreId]);
+
+    useEffect(() => {
         fetchMoviesByGenre();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedGenre, currentPage]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [genreId, currentPage]);
+
 
     const fetchMoviesByGenre = async () => {
         if (!selectedGenre) {
             return;
         }
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${selectedGenre.id}&page=${currentPage + 1}`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${currentPage + 1}`);
         const data = await response.json();
         setMovies(data.results);
     };
@@ -30,7 +35,7 @@ function MovieDisplayByGenre({ genres, apiKey }) {
         return (
             <div className="container-fluid font-monospace">
                 <div className="row">
-                    <div className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger ">
+                    <div id='genre-title' className="col d-flex justify-content-center mb-3 p-3 text-light bg-danger">
                         <h1 className="fw-bold">{selectedGenre.name}</h1>
                     </div>
                     <div className="row">
@@ -64,6 +69,7 @@ function MovieDisplayByGenre({ genres, apiKey }) {
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
                             pageCount={pageCount}
                             onPageChange={({ selected: selectedPage }) => setCurrentPage(selectedPage)}
+                            forcePage={currentPage}
                             containerClassName={"pagination"}
                             previousLinkClassName={"pagination__link"}
                             nextLinkClassName={"pagination__link"}
