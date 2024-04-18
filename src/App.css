@@ -90,7 +90,7 @@
 }
 
 .movie-banner {
-  min-height: 400px;
+  height: 500px;
   background-size: cover;
   background-position: top;
   position: relative;
@@ -109,7 +109,6 @@
 
 .movie-details {
   color: white;
-  text-wrap: wrap;
   text-align: left;
 }
 
