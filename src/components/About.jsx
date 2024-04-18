@@ -1,7 +1,7 @@
 function About() {
     return (
         <>
-            <div className="container-fluid font-monospace p-0">
+            <div className="container-fluid font-monospace p-0 m-0">
                 <h1 className="fw-bold text-center text-bg-danger shadow p-3">Streamify</h1>
             </div>
             <div className="container font-monospace">
