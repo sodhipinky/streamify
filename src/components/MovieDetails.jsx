@@ -66,6 +66,7 @@ function MovieDetails() {
                 });
         }
         movieDetailsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [movieId]);
 
     if (!movie) {
