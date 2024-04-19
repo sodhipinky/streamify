@@ -183,6 +183,15 @@
   min-height: 93vh;
 }
 
+.search-icon {
+  transition: color 0.2s ease-in-out;
+}
+
+.search-icon:hover {
+  color: red;
+  cursor: pointer;
+}
+
 body {
   padding-top: 70px;
 }

@@ -116,10 +116,9 @@ function App() {
           movieTypes={movieTypes}
           genres={genres}
           isLoading={isLoading}
-          apiKey={apiKey}
         />
         <Routes>
-          <Route path='/search-results' element={<SearchResults />} />
+          <Route path='/search-results/:searchTerm' element={<SearchResults apiKey={apiKey} />} />
           <Route path='/' element={
             <>
               <TrendingMovies

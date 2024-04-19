@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Logo from '../assets/favicon.ico'
 import propTypes from 'prop-types';
 
-function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
+function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -19,14 +19,17 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
             if (searchTerm.trim() === '') {
                 return;
             }
-            await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    navigate('/search-results', { state: { searchedMovies: data.results } });
-                    setSearchTerm('');
-                })
-                .catch(error => console.log(error));
+            navigate(`/search-results/${searchTerm}`);
+            setSearchTerm('');
         }
+    }
+
+    const handleSearchIconClick = async () => {
+        if (searchTerm.trim() === '') {
+            return;
+        }
+        navigate(`/search-results/${searchTerm}`);
+        setSearchTerm('');
     }
 
 
@@ -81,7 +84,10 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
                                     onKeyDown={handleKeyDown}
                                     aria-label="Search"
                                 />
-                                <InputGroup.Text className="border-0 bg-transparent rounded-end-pill position-absolute top-50 translate-middle-y end-0">
+                                <InputGroup.Text
+                                    className="border-0 bg-transparent rounded-end-pill position-absolute top-50 translate-middle-y end-0 search-icon"
+                                    onClick={handleSearchIconClick}
+                                >
                                     <Search />
                                 </InputGroup.Text>
                             </div>
@@ -96,8 +102,7 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes, apiKey }) {
 StreamifyNavbar.propTypes = {
     searchFieldWidth: propTypes.string.isRequired,
     genres: propTypes.array.isRequired,
-    movieTypes: propTypes.array.isRequired,
-    apiKey: propTypes.string.isRequired
+    movieTypes: propTypes.array.isRequired
 }
 
 

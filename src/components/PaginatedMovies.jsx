@@ -6,7 +6,7 @@ import MovieList from './MovieList';
 function PaginatedMovies({ apiKey }) {
     const [currentPage, setCurrentPage] = useState(0);
     const [movies, setMovies] = useState([]);
-    const pageCount = 10;
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         fetchMovies();
@@ -17,6 +17,7 @@ function PaginatedMovies({ apiKey }) {
         const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${currentPage + 1}&api_key=${apiKey}`);
         const data = await response.json();
         setMovies(data.results);
+        setTotalPages(data.total_pages);
     };
 
     return (
@@ -35,7 +36,7 @@ function PaginatedMovies({ apiKey }) {
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
-                            pageCount={pageCount}
+                            pageCount={totalPages}
                             onPageChange={({ selected: selectedPage }) => setCurrentPage(selectedPage)}
                             containerClassName={"pagination"}
                             previousLinkClassName={"pagination__link"}

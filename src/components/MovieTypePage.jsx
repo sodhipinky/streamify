@@ -14,7 +14,7 @@ function MovieTypePage({ apiKey, movieType }) {
     const [error, setError] = useState(null);
     const actualMovieType = movieType.replace(/\s/g, '_').toLowerCase();
     const [currentPage, setCurrentPage] = useState(0);
-    const pageCount = 10;
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
         setCurrentPage(0);
@@ -46,8 +46,8 @@ function MovieTypePage({ apiKey, movieType }) {
                 if (!setMovies) {
                     throw new Error('Invalid movie type');
                 }
-
                 setMovies(results);
+                setTotalPages(data.total_pages);
                 setIsLoading(false);
             } catch (error) {
                 setError(error);
@@ -120,7 +120,7 @@ function MovieTypePage({ apiKey, movieType }) {
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
-                            pageCount={pageCount}
+                            pageCount={totalPages}
                             onPageChange={({ selected: selectedPage }) => setCurrentPage(selectedPage)}
                             forcePage={currentPage}
                             containerClassName={"pagination"}

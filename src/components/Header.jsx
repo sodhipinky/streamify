@@ -3,7 +3,7 @@ import StreamifyNavbar from "./StreamifyNavbar"
 import { useEffect, useState } from "react"
 import { Spinner } from "../App";
 
-function Header({ movieTypes, genres, isLoading, apiKey }) {
+function Header({ movieTypes, genres, isLoading }) {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -30,7 +30,6 @@ function Header({ movieTypes, genres, isLoading, apiKey }) {
                     searchFieldWidth={searchFieldWidth}
                     genres={genres}
                     movieTypes={movieTypes}
-                    apiKey={apiKey}
                 />
             </div>
         </>
@@ -40,8 +39,7 @@ function Header({ movieTypes, genres, isLoading, apiKey }) {
 Header.propTypes = {
     movieTypes: PropTypes.array.isRequired,
     genres: PropTypes.array.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    apiKey: PropTypes.string.isRequired
+    isLoading: PropTypes.bool.isRequired
 }
 
 export default Header

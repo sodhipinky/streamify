@@ -10,7 +10,7 @@ function UpcomingMovies({ apiKey }) {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
-    const PER_PAGE = 10;
+    const [totalPages, setTotalPages] = useState(0);
     const today = new Date();
 
     useEffect(() => {
@@ -23,6 +23,7 @@ function UpcomingMovies({ apiKey }) {
             const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_date.gte=${today}&page=${currentPage + 1}&adult=false`);
             const data = await response.json();
             setUpcomingMovies(data.results.sort((a, b) => new Date(a.release_date) - new Date(b.release_date)));
+            setTotalPages(data.total_pages)
             setIsLoading(false);
         } catch (error) {
             setError(error);
@@ -53,10 +54,6 @@ function UpcomingMovies({ apiKey }) {
         )
     }
 
-    const offset = currentPage * PER_PAGE;
-    const pageCount = Math.ceil(upcomingMovies.length / PER_PAGE);
-    const currentPageData = upcomingMovies.slice(offset, offset + PER_PAGE);
-
     return (
         <div className="container-fluid font-monospace ">
             <div className="row">
@@ -69,7 +66,7 @@ function UpcomingMovies({ apiKey }) {
             <div className="container font-monospace ">
                 <div className="row">
                     <div className="col d-flex flex-wrap justify-content-around ">
-                        <MovieList movies={currentPageData} />
+                        <MovieList movies={upcomingMovies} />
                     </div>
                 </div>
                 <div className="row mt-3">
@@ -77,7 +74,7 @@ function UpcomingMovies({ apiKey }) {
                         <ReactPaginate
                             previousLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>←</button>}
                             nextLabel={<button className='btn btn-outline-success fs-5 fw-bold border-0'>→</button>}
-                            pageCount={pageCount}
+                            pageCount={totalPages}
                             onPageChange={({ selected }) => setCurrentPage(selected)}
                             containerClassName={'pagination'}
                             previousLinkClassName='pagination__link'
