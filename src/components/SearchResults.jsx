@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { fetchSearchResults } from "../services/movieService";
 import ReactPaginate from "react-paginate";
 import MovieList from "./MovieList";
 import Sticky from "react-stickynode";
@@ -15,19 +16,9 @@ function SearchResults() {
     }, [searchTerm]);
 
     useEffect(() => {
-        fetchSearchResults();
+        fetchSearchResults(searchTerm, currentPage, setSearchedMovies, setTotalPages);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm, currentPage]);
-
-    const fetchSearchResults = async () => {
-        await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchTerm}&page=${currentPage + 1}`)
-            .then(response => response.json())
-            .then(data => {
-                setSearchedMovies(data.results);
-                setTotalPages(data.total_pages);
-            })
-            .catch(error => console.error(error));
-    }
 
     if (searchedMovies.length === 0) {
         return (

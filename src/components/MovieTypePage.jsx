@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import Sticky from 'react-stickynode';
 import { Spinner } from '../App'
 import { useState, useEffect } from 'react'
+import { fetchMoviesByType } from '../services/movieService';
 import UpcomingMovies from './UpcomingMovies';
 
 function MovieTypePage({ movieType }) {
@@ -21,7 +22,7 @@ function MovieTypePage({ movieType }) {
     }, [actualMovieType]);
 
     useEffect(() => {
-        fetchMovies();
+        fetchMoviesByType(actualMovieType, currentPage, setTotalPages, setIsLoading, setError, movieTypeToSetter)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, actualMovieType]);
 
@@ -29,31 +30,6 @@ function MovieTypePage({ movieType }) {
         'popular': setPopularMovies,
         'now_playing': setNowPlayingMovies,
         'top_rated': setTopRatedMovies,
-    };
-
-    const fetchMovies = async () => {
-        if (actualMovieType === 'upcoming') {
-            return;
-        }
-        else {
-            const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&page=${currentPage + 1}&adult=false`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const results = data.results;
-
-                const setMovies = movieTypeToSetter[actualMovieType];
-                if (!setMovies) {
-                    throw new Error('Invalid movie type');
-                }
-                setMovies(results);
-                setTotalPages(data.total_pages);
-                setIsLoading(false);
-            } catch (error) {
-                setError(error);
-                setIsLoading(false);
-            }
-        }
     };
 
     if (actualMovieType === 'upcoming') {

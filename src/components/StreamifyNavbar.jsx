@@ -32,7 +32,6 @@ function StreamifyNavbar({ searchFieldWidth, genres, movieTypes }) {
         setSearchTerm('');
     }
 
-
     return (
         <>
             <Navbar collapseOnSelect bg="dark" variant='dark' expand="lg" className='font-monospace pb-2 sticky-nav'>

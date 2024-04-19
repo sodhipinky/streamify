@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Spinner } from '../App';
+import { fetchUpcomingMovies } from '../services/movieService';
 import Sticky from 'react-stickynode';
 import MovieList from './MovieList';
 import ReactPaginate from 'react-paginate';
@@ -13,22 +14,10 @@ function UpcomingMovies() {
     const today = new Date();
 
     useEffect(() => {
-        fetchMovies();
+        fetchUpcomingMovies(currentPage, setUpcomingMovies, setIsLoading, setTotalPages, setError, today);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-    const fetchMovies = async () => {
-        try {
-            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&primary_release_date.gte=${today}&page=${currentPage + 1}&adult=false`);
-            const data = await response.json();
-            setUpcomingMovies(data.results.sort((a, b) => new Date(a.release_date) - new Date(b.release_date)));
-            setTotalPages(data.total_pages)
-            setIsLoading(false);
-        } catch (error) {
-            setError(error);
-            setIsLoading(false);
-        }
-    }
     if (isLoading) {
         return (
             <div className='container-fluid'>

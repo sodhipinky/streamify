@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { fetchMoviesByPage } from '../services/movieService';
 import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
 
@@ -8,16 +9,9 @@ function PaginatedMovies() {
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        fetchMovies();
+        fetchMoviesByPage(currentPage, setMovies, setTotalPages);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
-
-    const fetchMovies = async () => {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${currentPage + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
-        const data = await response.json();
-        setMovies(data.results);
-        setTotalPages(data.total_pages);
-    };
 
     return (
         <div className="container font-monospace mt-5">
