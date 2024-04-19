@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { fetchTrendingMovies, fetchGenres } from './services/movieService';
 import PaginatedMovies from './components/PaginatedMovies';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 import TrendingMovies from './components/TrendingMovies';
 import Header from './components/Header';
 import MovieDetails from './components/MovieDetails';
@@ -11,6 +10,8 @@ import About from './components/About';
 import MovieDisplayByGenre from './components/MovieDisplayByGenre';
 import SearchResults from './components/SearchResults';
 import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 export function Spinner() {
   return <div className="spinner"></div>;
@@ -42,35 +43,25 @@ function App() {
   }
 
   useEffect(() => {
-    const fetchTrendingMoviesThisWeek = async () => {
-      await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}&page=1`)
-        .then(response => response.json())
-        .then(data => setTrendingMoviesThisWeek(data.results))
-        .catch(error => setError(error));
+    const fetchData = async () => {
+      try {
+        const [weekMovies, todayMovies, genres] = await Promise.all([
+          fetchTrendingMovies('week', apiKey),
+          fetchTrendingMovies('day', apiKey),
+          fetchGenres(apiKey)
+        ]);
+        setTrendingMoviesThisWeek(weekMovies);
+        setTrendingMoviesToday(todayMovies);
+        setGenres(genres);
+      }
+      catch (error) {
+        setError(error);
+      }
+      finally {
+        setIsLoading(false);
+      }
     };
-    fetchTrendingMoviesThisWeek();
-
-    const fetchTrendingMoviesToday = async () => {
-      await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=1`)
-        .then(response => response.json())
-        .then(data => setTrendingMoviesToday(data.results))
-        .catch(error => setError(error));
-    };
-    fetchTrendingMoviesToday();
-
-    const fetchGenres = async () => {
-      await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          setGenres(data.genres)
-          setIsLoading(false)
-        })
-        .catch(error => {
-          console.error(error)
-          setIsLoading(false)
-        });
-    }
-    fetchGenres();
+    fetchData();
   }, []);
 
   if (isLoading) {
