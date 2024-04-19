@@ -194,4 +194,5 @@
 
 body {
   padding-top: 70px;
+  overflow-x: hidden;
 }
