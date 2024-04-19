@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import { fetchMovieDetails, fetchMovieCredits, fetchMovieReleaseDates, fetchMovieDetailsData } from '../services/movieService';
 
 function MovieDetails() {
     const { movieId } = useParams();
@@ -12,60 +13,10 @@ function MovieDetails() {
     const [, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const fetchMovieDetails = async () => {
-            await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=4c0193b45b042c536215774762ee44b5`)
-                .then(response => response.json())
-                .then(data => setMovie(data))
-                .catch(error => console.error(error));
-        }
-        fetchMovieDetails();
-
-        const movieCredits = async () => {
-            setIsLoading(true);
-            await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=4c0193b45b042c536215774762ee44b5`)
-                .then(response => response.json())
-                .then(data => {
-                    setMovieCredits(data);
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    console.error(error)
-                    setIsLoading(false);
-                });
-        }
-        movieCredits();
-
-        //fetch the release dates data, and finc the certification for the US
-        const fetchReleaseDates = async () => {
-            setIsLoading(true);
-            await fetch(`https://api.themoviedb.org/3/movie/${movieId}/release_dates?api_key=4c0193b45b042c536215774762ee44b5`)
-                .then(response => response.json())
-                .then(data => {
-                    const usReleaseDates = data.results.find(result => result.iso_3166_1 === 'US');
-                    setCertification(usReleaseDates ? usReleaseDates.release_dates[0].certification : 'N/A');
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    console.error(error)
-                    setIsLoading(false);
-                });
-        }
-        fetchReleaseDates();
-
-        const movieDetailsData = async () => {
-            setIsLoading(true);
-            await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=4c0193b45b042c536215774762ee44b5`)
-                .then(response => response.json())
-                .then(data => {
-                    setMovieDetails(data);
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    console.error(error)
-                    setIsLoading(false);
-                });
-        }
-        movieDetailsData();
+        fetchMovieDetails(movieId, setMovie);
+        fetchMovieCredits(movieId, setMovieCredits, setIsLoading);
+        fetchMovieReleaseDates(movieId, setCertification, setIsLoading);
+        fetchMovieDetailsData(movieId, setMovieDetails, setIsLoading);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [movieId]);
 

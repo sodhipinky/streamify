@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchMoviesByGenre } from '../services/movieService';
 import propTypes from 'prop-types'
 import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
@@ -17,20 +18,9 @@ function MovieDisplayByGenre({ genres }) {
     }, [genreId]);
 
     useEffect(() => {
-        fetchMoviesByGenre();
+        fetchMoviesByGenre(genreId, selectedGenre, currentPage, setMovies, setTotalPages);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [genreId, currentPage]);
-
-
-    const fetchMoviesByGenre = async () => {
-        if (!selectedGenre) {
-            return;
-        }
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&with_genres=${genreId}&page=${currentPage + 1}&adult=false`);
-        const data = await response.json();
-        setMovies(data.results);
-        setTotalPages(data.total_pages);
-    };
 
 
     if (movies.length === 0) {
