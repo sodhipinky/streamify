@@ -46,8 +46,8 @@ function App() {
     const fetchData = async () => {
       try {
         const [weekMovies, todayMovies, genres] = await Promise.all([
-          fetchTrendingMovies('week', apiKey),
-          fetchTrendingMovies('day', apiKey),
+          fetchTrendingMovies('week'),
+          fetchTrendingMovies('day'),
           fetchGenres(apiKey)
         ]);
         setTrendingMoviesThisWeek(weekMovies);
