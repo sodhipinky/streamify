@@ -28,7 +28,6 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const topRatedScrollContainer = useRef(null);
   const trendingScrollContainer = useRef(null);
 
   const scroll = (direction, ref) => {
