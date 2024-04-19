@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import MovieList from "./MovieList";
 import Sticky from "react-stickynode";
-import PropTypes from 'prop-types';
 
-function SearchResults({ apiKey }) {
+function SearchResults() {
     const { searchTerm } = useParams();
     const [searchedMovies, setSearchedMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -21,7 +20,7 @@ function SearchResults({ apiKey }) {
     }, [searchTerm, currentPage]);
 
     const fetchSearchResults = async () => {
-        await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}&page=${currentPage + 1}`)
+        await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchTerm}&page=${currentPage + 1}`)
             .then(response => response.json())
             .then(data => {
                 setSearchedMovies(data.results);
@@ -91,10 +90,6 @@ function SearchResults({ apiKey }) {
             </>
         )
     )
-}
-
-SearchResults.propTypes = {
-    apiKey: PropTypes.string.isRequired
 }
 
 export default SearchResults

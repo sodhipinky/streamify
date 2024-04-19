@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Spinner } from '../App';
-import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import MovieList from './MovieList';
 import ReactPaginate from 'react-paginate';
 
-function UpcomingMovies({ apiKey }) {
+function UpcomingMovies() {
     const [upcomingMovies, setUpcomingMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,7 +19,7 @@ function UpcomingMovies({ apiKey }) {
 
     const fetchMovies = async () => {
         try {
-            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_date.gte=${today}&page=${currentPage + 1}&adult=false`);
+            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&primary_release_date.gte=${today}&page=${currentPage + 1}&adult=false`);
             const data = await response.json();
             setUpcomingMovies(data.results.sort((a, b) => new Date(a.release_date) - new Date(b.release_date)));
             setTotalPages(data.total_pages)
@@ -89,10 +88,6 @@ function UpcomingMovies({ apiKey }) {
             </div>
         </div>
     );
-}
-
-UpcomingMovies.propTypes = {
-    apiKey: PropTypes.string.isRequired
 }
 
 export default UpcomingMovies;

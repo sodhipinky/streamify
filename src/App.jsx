@@ -28,8 +28,6 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const apiKey = '4c0193b45b042c536215774762ee44b5';
-
   // const topRatedScrollContainer = useRef(null);
   const trendingScrollContainer = useRef(null);
 
@@ -48,7 +46,7 @@ function App() {
         const [weekMovies, todayMovies, genres] = await Promise.all([
           fetchTrendingMovies('week'),
           fetchTrendingMovies('day'),
-          fetchGenres(apiKey)
+          fetchGenres()
         ]);
         setTrendingMoviesThisWeek(weekMovies);
         setTrendingMoviesToday(todayMovies);
@@ -109,7 +107,7 @@ function App() {
           isLoading={isLoading}
         />
         <Routes>
-          <Route path='/search-results/:searchTerm' element={<SearchResults apiKey={apiKey} />} />
+          <Route path='/search-results/:searchTerm' element={<SearchResults />} />
           <Route path='/' element={
             <>
               <TrendingMovies
@@ -120,7 +118,7 @@ function App() {
                 scroll={scroll}
                 trendingScrollContainer={trendingScrollContainer}
               />
-              <PaginatedMovies apiKey={apiKey} />
+              <PaginatedMovies />
             </>
           }
           />
@@ -134,7 +132,7 @@ function App() {
                 scroll={scroll}
                 trendingScrollContainer={trendingScrollContainer}
               />
-              <PaginatedMovies apiKey={apiKey} />
+              <PaginatedMovies />
             </>
           } />
           <Route path='/movie-details/:movieId' element={<MovieDetails />} />
@@ -146,7 +144,6 @@ function App() {
                 path={`/${movieType.replace(/\s/g, '_').toLowerCase()}`}
                 element={
                   <MovieTypePage
-                    apiKey={apiKey}
                     movieType={movieType}
                   />
                 }
@@ -156,7 +153,6 @@ function App() {
           <Route path='/genre/:genreId' element={
             <MovieDisplayByGenre
               genres={genres}
-              apiKey={apiKey}
             />
           } />
         </Routes>

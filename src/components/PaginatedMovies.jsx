@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import propTypes from 'prop-types'
 import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
 
-function PaginatedMovies({ apiKey }) {
+function PaginatedMovies() {
     const [currentPage, setCurrentPage] = useState(0);
     const [movies, setMovies] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
@@ -14,7 +13,7 @@ function PaginatedMovies({ apiKey }) {
     }, [currentPage]);
 
     const fetchMovies = async () => {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${currentPage + 1}&api_key=${apiKey}`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?page=${currentPage + 1}&api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
         const data = await response.json();
         setMovies(data.results);
         setTotalPages(data.total_pages);
@@ -52,10 +51,6 @@ function PaginatedMovies({ apiKey }) {
         </div >
 
     );
-}
-
-PaginatedMovies.propTypes = {
-    apiKey: propTypes.string.isRequired
 }
 
 export default PaginatedMovies;

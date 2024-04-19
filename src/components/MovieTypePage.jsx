@@ -6,7 +6,7 @@ import { Spinner } from '../App'
 import { useState, useEffect } from 'react'
 import UpcomingMovies from './UpcomingMovies';
 
-function MovieTypePage({ apiKey, movieType }) {
+function MovieTypePage({ movieType }) {
     const [popularMovies, setPopularMovies] = useState([]);
     const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
     const [topRatedMovies, setTopRatedMovies] = useState([]);
@@ -36,7 +36,7 @@ function MovieTypePage({ apiKey, movieType }) {
             return;
         }
         else {
-            const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${apiKey}&page=${currentPage + 1}&adult=false`;
+            const url = `https://api.themoviedb.org/3/movie/${actualMovieType}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&page=${currentPage + 1}&adult=false`;
             try {
                 const response = await fetch(url);
                 const data = await response.json();
@@ -57,7 +57,7 @@ function MovieTypePage({ apiKey, movieType }) {
     };
 
     if (actualMovieType === 'upcoming') {
-        return <UpcomingMovies apiKey={apiKey} />
+        return <UpcomingMovies />
     }
 
     if (isLoading) {
@@ -139,7 +139,6 @@ function MovieTypePage({ apiKey, movieType }) {
 }
 
 MovieTypePage.propTypes = {
-    apiKey: propTypes.string.isRequired,
     movieType: propTypes.string.isRequired
 }
 

@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import MovieList from './MovieList';
 import Sticky from 'react-stickynode';
 
-function MovieDisplayByGenre({ genres, apiKey }) {
+function MovieDisplayByGenre({ genres }) {
     const { genreId } = useParams();
     const selectedGenre = genres.find(genre => genre.id === parseInt(genreId));
     const [currentPage, setCurrentPage] = useState(0);
@@ -26,7 +26,7 @@ function MovieDisplayByGenre({ genres, apiKey }) {
         if (!selectedGenre) {
             return;
         }
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${currentPage + 1}&adult=false`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&with_genres=${genreId}&page=${currentPage + 1}&adult=false`);
         const data = await response.json();
         setMovies(data.results);
         setTotalPages(data.total_pages);
@@ -91,7 +91,6 @@ function MovieDisplayByGenre({ genres, apiKey }) {
 
 MovieDisplayByGenre.propTypes = {
     genres: propTypes.array.isRequired,
-    apiKey: propTypes.string.isRequired
 }
 
 export default MovieDisplayByGenre;
